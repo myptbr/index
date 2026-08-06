@@ -1823,6 +1823,7 @@
       width: min(560px, 44vw);
       max-height: min(86vh, 680px);
       overflow-y: auto;
+      scrollbar-gutter: stable;
       padding-right: 8px;
       padding-top: 4px;
       text-align: left;
@@ -1976,8 +1977,10 @@
       color: var(--mal-gold);
     }
 
-    /* Botão "Watch Now" (Crunchyroll app) — só aparece em telas mobile,
-       já que em desktop não faz sentido tentar abrir o app do celular. */
+    /* Botão "Watch Now" (Crunchyroll): visível em qualquer tamanho de tela,
+       ao lado do botão do Anime-Planet. No mobile, se o app do Crunchyroll
+       estiver instalado, o universal link abre ele direto; sem o app (ou
+       no PC), cai no site normalmente. */
     .watch-now-links {
       display: flex;
       align-items: center;
@@ -2000,6 +2003,7 @@
       object-fit: contain;
       border-radius: 0;
       box-shadow: none;
+      transform-origin: left center;
       transition: transform 0.15s ease, filter 0.15s ease;
     }
 
@@ -2011,6 +2015,7 @@
       object-fit: contain;
       border-radius: 0;
       box-shadow: none;
+      transform-origin: left center;
       transition: transform 0.15s ease, filter 0.15s ease;
     }
 
@@ -2018,14 +2023,13 @@
     a.rank-mal-label--anime-planet:focus-visible .anime-planet-btn-logo,
     a.rank-mal-label--crunchyroll:hover .crunchyroll-btn-logo,
     a.rank-mal-label--crunchyroll:focus-visible .crunchyroll-btn-logo {
-      transform: scale(1.06);
       filter: brightness(1.15);
     }
 
     a.rank-mal-label--anime-planet svg,
     a.rank-mal-label--crunchyroll svg {
       opacity: 0.7;
-      transition: opacity 0.15s ease, transform 0.15s ease;
+      transition: opacity 0.15s ease;
     }
 
     a.rank-mal-label--anime-planet:hover svg,
@@ -2033,22 +2037,22 @@
     a.rank-mal-label--crunchyroll:hover svg,
     a.rank-mal-label--crunchyroll:focus-visible svg {
       opacity: 1;
-      transform: translate(1px, -1px);
+    }
+
+    @media (min-width: 761px) {
+      a.rank-mal-label--anime-planet svg,
+      a.rank-mal-label--crunchyroll svg {
+        display: none;
+      }
     }
 
     a.rank-mal-label--crunchyroll {
-      display: none;
+      display: inline-flex;
     }
 
     a.rank-mal-label--crunchyroll:hover,
     a.rank-mal-label--crunchyroll:focus-visible {
       color: #ff640a;
-    }
-
-    @media (max-width: 760px) {
-      a.rank-mal-label--crunchyroll {
-        display: inline-flex;
-      }
     }
 
     .rank-mal-rows {
@@ -2661,7 +2665,14 @@
       }
 
       .poster-lightbox:not(.simple-mode) .rank-mal-align-group .rank-mal-row.rank-mal-row-break .rank-mal-content {
-        display: inline-flex;
+        /* "block" (em vez de "inline-flex") faz o texto da temporada e dos
+           episódios fluir junto, como um parágrafo só. Assim, quando o
+           nome é grande e precisa quebrar linha, a quebra acontece num
+           ponto natural do texto (ex: "...The Final Chapters" / ": 2
+           episódios"), igual acontece com nomes longos tipo o do Monsters
+           do One Piece — em vez de temporada e episódios virarem duas
+           caixas flex separadas que quebram cada uma por conta própria. */
+        display: block;
       }
 
       .poster-lightbox:not(.simple-mode) .rank-mal-content {
@@ -4769,7 +4780,11 @@
               };
             }
             const seasonLabel = escapeHtml(entry.label || '')
-              .replace(/\b([IVXLCDM]+)\b/g, '<span class="rank-mal-roman">$1</span>');
+              .replace(/\b([IVXLCDM]+)\b/g, '<span class="rank-mal-roman">$1</span>')
+              // Labels podem ter um "\n" manual (ver dados do anime) pra
+              // forçar a quebra de linha num ponto específico do nome, em
+              // vez de deixar o navegador decidir onde quebrar.
+              .replace(/\n/g, '<br>');
             const isNumericEpisodes = typeof entry.episodes === 'number';
             // Só entra no grupo de alinhamento quando, além de numérico, o
             // label é "limpo" (sem ":" dentro dele). Labels com ":" no meio
@@ -5548,7 +5563,7 @@
         { id: "mushoku", img: "myranks/mushoku.webp", title: "Mushoku Tensei: Jobless Reincarnation", info: "2 temporadas: 47 episódios" , studio: "Studio Bind", airedSeason: "2021-?", rewatch: "First 2 Seasons", mal: [ { label: "1ª temporada I", episodes: 11, note: 8 }, { label: "1ª temporada II", episodes: 12, note: 8 }, { label: "2ª temporada I", episodes: 12, note: 7 }, { label: "2ª temporada II", episodes: 12, note: 8 } ] },
         { id: "cyberpunk", img: "myranks/cyberpunk.webp", title: "Cyberpunk: Edgerunners", info: "10 episódios" , studio: "Trigger", airedSeason: "2022", rewatch: "Only Season 1", mal: [ { label: "1ª temporada", episodes: 10, note: 9 } ] },
         { id: "solo-leveling", img: "myranks/solo-leveling.webp", title: "Solo Leveling", info: "2 temporadas: 25 episódios" , studio: "A-1 Pictures", airedSeason: "2024-?", rewatch: "Yes", mal: [ { label: "1ª temporada", episodes: 12, note: 8 }, { label: "2ª temporada", episodes: 13, note: 9 } ] },
-        { id: "aot", img: "myranks/aot.webp", title: "Attack on Titan", info: "4 temporadas: 89 episódios" , studio: "Wit Studio/MAPPA", airedSeason: "2013-2022", rewatch: "First 3 Seasons", mal: [ { label: "1ª temporada", episodes: 25, note: 9 }, { label: "2ª temporada", episodes: 12, note: 8 }, { label: "3ª temporada I", episodes: 12, note: 7 }, { label: "3ª temporada II", episodes: 10, note: 8 }, { label: "4ª temporada I", episodes: 16, note: 8 },{ label: "4ª temporada II", episodes: 12, note: 9 },{ label: "4ª temporada III: The Final Chapters", episodes: 2, note: 9 },] },
+        { id: "aot", img: "myranks/aot.webp", title: "Attack on Titan", info: "4 temporadas: 89 episódios" , studio: "Wit Studio/MAPPA", airedSeason: "2013-2022", rewatch: "First 3 Seasons", mal: [ { label: "1ª temporada", episodes: 25, note: 9 }, { label: "2ª temporada", episodes: 12, note: 8 }, { label: "3ª temporada I", episodes: 12, note: 7 }, { label: "3ª temporada II", episodes: 10, note: 8 }, { label: "4ª temporada I", episodes: 16, note: 8 },{ label: "4ª temporada II", episodes: 12, note: 9 },{ label: "4ª temporada III: The Final\nChapters", episodes: 2, note: 9 },] },
         { id: "dr-stone", img: "myranks/dr-stone.webp", title: "Dr. Stone", info: "4 temporadas: 95 episódios" , studio: "TMS Entertainment", airedSeason: "2019-2026", rewatch: "2 Times (Season 4 Not Yet)", mal: [ { label: "1ª temporada", episodes: 24, note: 8 }, { label: "2ª temporada", episodes: 11, note: 7 },{ label: "Ryusui", episodes: "TV Special", note: 8 }, { label: "3ª temporada I", episodes: 11, note: 7 }, { label: "3ª temporada II", episodes: 11, note: 8 }, { label: "4ª temporada I", episodes: 12, note: 8 }, { label: "4ª temporada II", episodes: 12, note: 9 }, { label: "4ª temporada III", episodes: 13, note: 8 } ] },
         { id: "cote", img: "myranks/cote.webp", title: "Classroom of the Elite", info: "4 temporadas: 54 episódios" , studio: "Lerche", airedSeason: "2017-?", rewatch: "First 3 Seasons", mal: [ { label: "1ª temporada", episodes: 12, note: 8 }, { label: "2ª temporada", episodes: 13, note: 8 }, { label: "3ª temporada", episodes: 13, note: 7 }, { label: "4ª temporada", episodes: 16, note: 8 } ] },
         { id: "re-zero", img: "myranks/re-zero.webp", title: "Re:ZERO - Starting Life in Another World", malSearch: "Re:Zero", info: "(~) 3 temporadas: 66 episódios" , studio: "White Fox", airedSeason: "2016-?", rewatch: "Only Season 1", mal: [ { label: "1ª temporada", episodes: 25, note: 9 }, { label: "2ª temporada I", episodes: 13, note: 8 } ,{ label: "2ª temporada II", episodes: 12, note: 8 } , { label: "3ª temporada", episodes: 16, note: 8 } , { label: "4ª temporada", episodes: 19, unwatched: true } ] },
@@ -5628,6 +5643,7 @@
 const rawWatchingData = [
         // Non-Seasonal Anime
         { id: "re-zero-4", img: "watchingnow/re-zero.webp", title: "Re:ZERO - Starting Life in Another World", info: "4 temporadas: 85 episódios", season: null, url: "https://www.anime-planet.com/anime/rezero-starting-life-in-another-world-season-4", crunchyroll: "https://www.crunchyroll.com/pt-br/series/GRGG9798R/rezero--starting-life-in-another-world-", seasons: [25, 25, 16, 19], cours: [null, [13, 12], null, null], studio: "White Fox", airedSeason: "2016-?", rewatch: "Only Season 1" },
+        { id: "rw-demon-slayer", img: "myranks/demon-slayer.webp", title: "Demon Slayer: Kimetsu no Yaiba", info: "5 temporadas: 63 episódios <br>1 Filme: 2h35m" , studio: "ufotable", airedSeason: "2019-?", rewatch: "Season 1", mal: [ { label: "1ª temporada", episodes: 26, note: 7 }, { label: "2ª temporada", episodes: 7, note: 6 }, { label: "3ª temporada", episodes: 11, note: 8 }, { label: "4ª temporada", episodes: 11, note: 7 }, { label: "5ª temporada", episodes: 8, note: 7 }, { label: "Movie: Infinity Castle Part 1", episodes: "2h35m", note: 8 } ] },
         { id: "my-teen-romantic-comedy", img: "watchingnow/my-teen-romantic-comedy.webp", title: "My Teen Romantic Comedy SNAFU", info: "3 temporadas: 39 episódios", url: "https://www.anime-planet.com/anime/my-teen-romantic-comedy-snafu", crunchyroll: "", season: null, seasons: [13, 13, 13], studio: "Brain's Base / feel", airedSeason: "2013-2020"},
         { id: "haikyuu-dumpster", img: "watchingnow/haikyuu.webp", title: "Haikyu!! The Dumpster Battle", info: "Filme: 1h25m", season: null, url: "https://www.anime-planet.com/anime/haikyuu-movie-5-the-dumpster-battle", crunchyroll: "https://www.crunchyroll.com/pt-br/watch/GD9UE9XZ7/haikyu-the-dumpster-battle", studio: "Production I.G", airedSeason: "2024"},
         { id: "mob", img: "watchingnow/mob.webp", title: "Mob Psycho 100", info: "3 temporadas: 37 episódios", url: "https://www.anime-planet.com/anime/mob-psycho-100", crunchyroll: "https://www.crunchyroll.com/pt-br/series/GY190DKQR/mob-psycho-100", season: null, seasons: [12, 13, 12], studio: "Bones", airedSeason: "2016-2022" },
@@ -5666,7 +5682,7 @@ const rawWatchingData = [
 
         // On Hold
         { id: "aoashi", img: "watchingnow/aoashi.webp", title: "Aoashi", info: "24 episódios", season: "on-hold", url: "https://www.anime-planet.com/anime/aoashi", crunchyroll: "https://www.crunchyroll.com/pt-br/series/G4PH0WX5J/aoashi", seasons: [24], studio: "Production I.G", airedSeason: "2022-?"},
-        { id: "danmachi", img: "watchingnow/danmachi.webp", title: "Danmachi: Is It Wrong to Try to Pick Up Girls in a Dungeon", info: "5ª temporada: 15 episódios", season: "on-hold", url: "https://www.anime-planet.com/anime/is-it-wrong-to-try-to-pick-up-girls-in-a-dungeon-v", crunchyroll: "https://www.crunchyroll.com/pt-br/series/G6DQN9KGR/is-it-wrong-to-try-to-pick-up-girls-in-a-dungeon", seasons: [15], studio: "J.C. Staff", airedSeason: "2024-2025"},
+        { id: "danmachi-5", img: "watchingnow/danmachi.webp", title: "Danmachi: Is It Wrong to Try to Pick Up Girls in a Dungeon", info: "5ª temporada: 15 episódios", season: "on-hold", url: "https://www.anime-planet.com/anime/is-it-wrong-to-try-to-pick-up-girls-in-a-dungeon-v", crunchyroll: "https://www.crunchyroll.com/pt-br/series/G6DQN9KGR/is-it-wrong-to-try-to-pick-up-girls-in-a-dungeon", seasons: [15], studio: "J.C. Staff", airedSeason: "2024-2025"},
         { id: "bocchi-the-rock", img: "watchingnow/bocchi-the-rock.webp", title: "Bocchi the Rock", info: "12 episódios", season: "on-hold", url: "https://www.anime-planet.com/anime/bocchi-the-rock", crunchyroll: "https://www.crunchyroll.com/pt-br/series/GXJHM3P19/bocchi-the-rock", seasons: [12], studio: "CloverWorks", airedSeason: "2022-?"},
         { id: "sk8", img: "watchingnow/sk8.webp", title: "SK8 the Infinity ", info: "12 episódios", season: "on-hold", url: "https://www.anime-planet.com/anime/sk8-the-infinity", crunchyroll: "https://www.crunchyroll.com/pt-br/series/G5PHNM434/sk8-the-infinity", seasons: [12], studio: "Bones", airedSeason: "2021-?"},
         { id: "study-of-vanitas", img: "watchingnow/study-of-vanitas.webp", title: "The Case Study of Vanitas", info: "1 temporada", season: "on-hold", url: "https://www.anime-planet.com/anime/the-case-study-of-vanitas", crunchyroll: "https://www.crunchyroll.com/pt-br/series/GEXH3W8DG/the-case-study-of-vanitas", seasons: [24], cours: [[12, 12]], studio: "Bones", airedSeason: "2021-2022" }
@@ -6156,6 +6172,11 @@ const rawWatchingData = [
         "kill-blue": { info: "2nd Season Announced" },
         "aoashi": { info: "2nd Season in Oct 2026" },
         "danmachi-5": { info: "Season 6 Announced" },
+
+        // others
+        "rw-demon-slayer": { info: "2 Movies in Production" },
+        "danmachi-5": { info: "Season 6 Announced" },
+        "haikyuu-dumpster": { info: "New Movie in 2027" },
       };
 
       // Cores de hover por categoria (mesmas cores usadas nos botões do drawer)
