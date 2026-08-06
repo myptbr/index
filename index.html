@@ -737,6 +737,9 @@
       align-items: center;
       gap: 12px;
       width: max-content;
+      will-change: transform;
+      transform: translateZ(0);
+      backface-visibility: hidden;
     }
 
     .search-marquee-row-right .search-marquee-track {
@@ -764,6 +767,8 @@
       border-radius: 14px;
       object-fit: cover;
       background: #111;
+      transform: translateZ(0);
+      backface-visibility: hidden;
     }
 
     .search-marquee-poster--wide {
@@ -1335,10 +1340,7 @@
     .credits-logo-img--youtube {
       height: 25px;
     }
-    .credits-logo-img--google {
-      height: 35px;
-    }
-
+    
     /* Link com ícone do GitHub + nome de usuário */
     .credits-name-github {
       display: inline-flex;
@@ -1365,7 +1367,7 @@
 
     /* Gemini um pouco maior no bloco Fontes & Referências */
     .credits-logo-img--gemini-source {
-      height: 30px;
+      height: 20px;
     }
 
     /* Gemini um pouco maior no bloco Fontes & Referências */
@@ -1380,7 +1382,7 @@
 
     /* Voicemod Tuna um pouco maior */
     .credits-logo-img--voicemod-tuna {
-      height: 30px;
+      height: 25px;
     }
 
     /* Bloco Fontes & Referências em grade de 2 colunas (2 logos por linha) */
@@ -4119,7 +4121,7 @@
   <aside class="category-drawer" id="categoryDrawer" aria-hidden="true">
     <div class="drawer-top">
       <div class="drawer-top-text">
-        <span class="drawer-eyebrow"> ©2026 myhtml - <a href="#" class="drawer-eyebrow-credits" id="creditsTrigger">Credits</a></span>
+        <span class="drawer-eyebrow"> ©2026 myhtml - <a href="#" class="drawer-eyebrow-credits" id="creditsTrigger">Credits Tiers</a></span>
         <h2 class="drawer-title" id="drawerTitleEl">You Decided That:</h2>
 
       </div>
@@ -4369,31 +4371,16 @@
             </div>
 
             <div class="credits-block">
-              <div class="credits-role">Diretor Geral</div>
+              <div class="credits-role">THE GOAT</div>
               <div class="credits-names">
-                <a class="credits-name credits-name-logo" href="https://claude.ai" target="_blank" rel="noopener noreferrer">
+                <a class="credits-name credits-name-logo" href="https://claude.ai" href="https://media.tenor.com/d7z3jSKznEgAAAAe/goat-sullivan.png" target="_blank" rel="noopener noreferrer">
                   <img class="credits-logo-img" src="assets/credits-logos/claude.webp" alt="Claude" loading="lazy" decoding="async">
                 </a>
               </div>
             </div>
 
             <div class="credits-block">
-              <div class="credits-role">Referências de Texto</div>
-              <div class="credits-names credits-names--sources">
-                <a class="credits-name credits-name-logo" href="https://gemini.google.com" target="_blank" rel="noopener noreferrer">
-                  <img class="credits-logo-img credits-logo-img--gemini-source" src="assets/credits-logos/gemini.webp" alt="Gemini" loading="lazy" decoding="async">
-                </a>
-                <a class="credits-name credits-name-logo" href="https://myanimelist.net" target="_blank" rel="noopener noreferrer">
-                  <img class="credits-logo-img credits-logo-img--wide" src="assets/credits-logos/myanimelist.webp" alt="MyAnimeList" loading="lazy" decoding="async">
-                </a>
-                <a class="credits-name credits-name-logo" href="https://www.anime-planet.com" target="_blank" rel="noopener noreferrer">
-                  <img class="credits-logo-img credits-logo-img--wide credits-logo-img--anime-planet" src="assets/credits-logos/anime-planet.webp" alt="Anime-Planet" loading="lazy" decoding="async">
-                </a>
-              </div>
-            </div>
-
-            <div class="credits-block">
-              <div class="credits-role">Fontes das Imagens</div>
+              <div class="credits-role">HIGH TIER HELPERS</div>
               <div class="credits-names credits-names--sources">
                 <a class="credits-name credits-name-logo" href="https://www.crunchyroll.com" target="_blank" rel="noopener noreferrer">
                   <img class="credits-logo-img" src="assets/credits-logos/crunchyroll.webp" alt="Crunchyroll" loading="lazy" decoding="async">
@@ -4401,45 +4388,51 @@
                 <a class="credits-name credits-name-logo" href="https://www.primevideo.com" target="_blank" rel="noopener noreferrer">
                   <img class="credits-logo-img credits-logo-img--wide credits-logo-img--prime" src="assets/credits-logos/prime-video.webp" alt="Prime Video" loading="lazy" decoding="async">
                 </a>
-                <a class="credits-name credits-name-logo" href="https://www.google.com" target="_blank" rel="noopener noreferrer">
-                  <img class="credits-logo-img credits-logo-img--wide credits-logo-img--google" src="assets/credits-logos/google.webp" alt="Google" loading="lazy" decoding="async">
-                </a>                
-                <a class="credits-name credits-name-logo" href="https://www.pinterest.com" target="_blank" rel="noopener noreferrer">
-                  <img class="credits-logo-img credits-logo-img--wide credits-logo-img--pinterest" src="assets/credits-logos/pinterest.webp" alt="Pinterest" loading="lazy" decoding="async">
-                </a>                
+                <a class="credits-name credits-name-logo" href="https://gemini.google.com" target="_blank" rel="noopener noreferrer">
+                  <img class="credits-logo-img credits-logo-img--gemini-source" src="assets/credits-logos/gemini.webp" alt="Gemini" loading="lazy" decoding="async">
+                </a>
               </div>
             </div>
 
             <div class="credits-block">
-              <div class="credits-role">Editores de Imagens</div>
+              <div class="credits-role">GOOD TIER HELPERS</div>
               <div class="credits-names credits-names--sources">
+                <a class="credits-name credits-name-logo" href="https://chatgpt.com" target="_blank" rel="noopener noreferrer">
+                  <img class="credits-logo-img credits-logo-img--chatgpt-source" src="assets/credits-logos/chatgpt.webp" alt="ChatGPT" loading="lazy" decoding="async">
+                </a>  
                  <a class="credits-name credits-name-logo" href="https://www.canva.com" target="_blank" rel="noopener noreferrer">
                   <img class="credits-logo-img credits-logo-img--wide credits-logo-img--canva" src="assets/credits-logos/canva.webp" alt="Canva" loading="lazy" decoding="async">
-                </a>           
-                 <a class="credits-name credits-name-logo" href="https://picwish.com/pt/photo-enhancer" target="_blank" rel="noopener noreferrer">
-                  <img class="credits-logo-img credits-logo-img--wide credits-logo-img--picwish" src="assets/credits-logos/picwish.webp" alt="Picwish" loading="lazy" decoding="async">
-                </a>                  
+                </a>                    
+                <a class="credits-name credits-name-logo" href="https://www.anime-planet.com" target="_blank" rel="noopener noreferrer">
+                  <img class="credits-logo-img credits-logo-img--wide credits-logo-img--anime-planet" src="assets/credits-logos/anime-planet.webp" alt="Anime-Planet" loading="lazy" decoding="async">
+                </a> 
+                <a class="credits-name credits-name-logo" href="https://www.pinterest.com" target="_blank" rel="noopener noreferrer">
+                  <img class="credits-logo-img credits-logo-img--wide credits-logo-img--pinterest" src="assets/credits-logos/pinterest.webp" alt="Pinterest" loading="lazy" decoding="async">
+                </a>                       
               </div>
             </div>
 
             <div class="credits-block">
-              <div class="credits-role">Sound Effects</div>
+              <div class="credits-role">SUPPORT TOOLS</div>
+              <div class="credits-names credits-names--sources">
+                <a class="credits-name credits-name-logo" href="https://myanimelist.net" target="_blank" rel="noopener noreferrer">
+                  <img class="credits-logo-img credits-logo-img--wide" src="assets/credits-logos/myanimelist.webp" alt="MyAnimeList" loading="lazy" decoding="async">
+                </a>
+                <a class="credits-name credits-name-logo" href="https://picwish.com/pt/photo-enhancer" target="_blank" rel="noopener noreferrer">
+                  <img class="credits-logo-img credits-logo-img--wide credits-logo-img--picwish" src="assets/credits-logos/picwish.webp" alt="Picwish" loading="lazy" decoding="async">
+                </a>  
+              </div>
+            </div>
+
+            <div class="credits-block">
+              <div class="credits-role">SUB 5 SOUND EFFECTS</div>
               <div class="credits-names credits-names--sources">
                 <a class="credits-name credits-name-logo" href="https://youtube.com" target="_blank" rel="noopener noreferrer">
                   <img class="credits-logo-img credits-logo-img--wide credits-logo-img--youtube" src="assets/credits-logos/youtube.webp" alt="Youtube" loading="lazy" decoding="async">
                 </a>
                 <a class="credits-name credits-name-logo" href="https://https://tuna.voicemod.net/" target="_blank" rel="noopener noreferrer">
                   <img class="credits-logo-img credits-logo-img--wide credits-logo-img--voicemod-tuna" src="assets/credits-logos/voicemod-tuna.webp" alt="Voicemod Tuna" loading="lazy" decoding="async">
-                </a>
-              </div>
-            </div>
-
-            <div class="credits-block">
-              <div class="credits-role">Text Editor & BG Ideias</div>
-              <div class="credits-names">
-                <a class="credits-name credits-name-logo" href="https://chatgpt.com" target="_blank" rel="noopener noreferrer">
-                  <img class="credits-logo-img credits-logo-img--chatgpt-source" src="assets/credits-logos/chatgpt.webp" alt="ChatGPT" loading="lazy" decoding="async">
-                </a>            
+                </a> 
               </div>
             </div>
 
@@ -7703,7 +7696,7 @@ const rawWatchingData = [
               const isWide = i % 3 === 1;
               const cls = isWide ? 'search-marquee-poster search-marquee-poster--wide' : 'search-marquee-poster';
               const src = isWide ? marqueeThumbSrc(a.img) : a.img;
-              return `<img class="${cls}" src="${src}" alt="" loading="lazy">`;
+              return `<img class="${cls}" src="${src}" alt="" loading="eager" decoding="sync">`;
             })
             .join('');
         }
