@@ -2080,6 +2080,18 @@
       text-overflow: ellipsis;
     }
 
+    /* Envelope em volta do pontilhado + nota. Por padrão "invisível"
+       (display: contents), então em quase todo lugar (grid do PC, linhas
+       alinháveis, etc.) o comportamento continua idêntico a antes, como se
+       o wrapper nem existisse — dots e nota seguem como itens
+       independentes. Ele só vira uma caixa flex de verdade dentro do
+       lightbox mobile (ver regra específica mais abaixo), justamente para
+       resolver o bug de quebra de linha das linhas irregulares (filmes,
+       especiais, títulos com ":"). */
+    .rank-mal-score {
+      display: contents;
+    }
+
     /* No PC (telas maiores que o breakpoint mobile), a linha volta a ficar
        espalhada: nome da temporada na esquerda, nota na direita. No celular
        (regra acima) continua tudo centralizado. */
@@ -2658,13 +2670,30 @@
         display: contents;
       }
 
-      .poster-lightbox:not(.simple-mode) .rank-mal-align-group .rank-mal-row.rank-mal-row-break {
+      .poster-lightbox:not(.simple-mode) .rank-mal-row.rank-mal-row-break {
         display: flex;
         align-items: center;
         grid-column: 1 / -1;
       }
 
-      .poster-lightbox:not(.simple-mode) .rank-mal-align-group .rank-mal-row.rank-mal-row-break .rank-mal-content {
+      /* Título das linhas irregulares (filmes, especiais, títulos com ":")
+         com um teto de largura (max-width). Sem isso, quando o texto é
+         comprido, o navegador calcula o espaço "faltando" (título +
+         pontilhado + nota não cabem juntos numa linha) usando como base o
+         tamanho do título SEM quebra (o texto inteiro em uma linha só, bem
+         largo) — e, como o pontilhado começa de uma caixa vazia (0px de
+         largura própria), quase todo aquele espaço que falta é descontado
+         só do título, nunca do pontilhado. Resultado: o título encolhe até
+         caber (quebrando em 2 linhas), mas o pontilhado nunca ganha o
+         espaço que sobrou de verdade, ficando preso no mínimo (14px), bem
+         coladinho na nota. Limitando a largura máxima do título a 60% da
+         linha, o cálculo já começa com um título "menor" desde o início,
+         então sobra espaço de verdade pro pontilhado esticar depois. Em
+         títulos curtos (que já cabem em menos de 60%), esse limite não faz
+         diferença nenhuma — o layout continua idêntico ao de antes, tudo
+         numa linha só. */
+      .poster-lightbox:not(.simple-mode) .rank-mal-row.rank-mal-row-break .rank-mal-content {
+        max-width: 60%;
         /* "block" (em vez de "inline-flex") faz o texto da temporada e dos
            episódios fluir junto, como um parágrafo só. Assim, quando o
            nome é grande e precisa quebrar linha, a quebra acontece num
@@ -4815,8 +4844,10 @@
               html: `
               <div class="rank-mal-row${isUnwatched ? ' unwatched' : ''}${isAlignable ? '' : ' rank-mal-row-break'}">
                 <span class="rank-mal-content"><span class="rank-mal-season">${seasonLabel}</span><span class="rank-mal-eps">${epPart}</span></span>
-                <span class="rank-mal-dots" aria-hidden="true"></span>
-                <span class="rank-mal-note${noteClass}">${noteText}</span>
+                <span class="rank-mal-score">
+                  <span class="rank-mal-dots" aria-hidden="true"></span>
+                  <span class="rank-mal-note${noteClass}">${noteText}</span>
+                </span>
               </div>`
             };
           });
@@ -5156,7 +5187,7 @@
           // pertence às listas "Incomplete" e "Announced Sequels" — usa o
           // próprio getFilteredData pra achar a posição, então basta ver se
           // o id aparece na lista de cada uma.
-          ['incomplete', 'announced'].forEach(key => {
+          ['incomplete', 'announced', 'watching'].forEach(key => {
             const list = (typeof getFilteredData === 'function') ? getFilteredData(key) : [];
             if (list.some(a => a.id === animeId)) {
               const label = String(CATEGORY_LABEL[key] || '').replace(/:\s*$/, '');
@@ -5555,7 +5586,7 @@
       const rawAnimeData = [
         { id: "code-geass", img: "myranks/code-geass.webp", title: "Code Geass: Lelouch of the Rebellion", info: "2 temporadas: 50 episódios", studio: "Sunrise", airedSeason: "2006-2008", rewatch: "Not Yet", mal: [ { label: "1ª temporada", episodes: 25, note: 9 }, { label: "2ª temporada", episodes: 25, note: 10 } ] },
         { id: "hxh", img: "myranks/hxh.webp", title: "Hunter x Hunter (2011)", info: "1 temporada: 148 episódios" , studio: "MADHOUSE", airedSeason: "2011-2014", rewatch: "2 Times", mal: [ { label: "1 temporada", episodes: 148, note: 10 } ] },
-        { id: "one-piece", img: "myranks/one-piece.webp", title: "One Piece", info: "1 temporada: 1169 episódios" , studio: "Toei Animation", airedSeason: "1999-?", rewatch: "Impossible", mal: [ { label: "1 temporada", episodes: 1169, note: 10 },{ label: "Film: Z", episodes: "1h47m", note: 6 },{ label: "Film: Gold", episodes: "2h0m", note: 6 },{ label: "Stampede", episodes: "1h41m", note: 7 },{ label: "Film: Red", episodes: "1h56m", note: 8 },{spacer: true},{ label: "Monsters: 103 Mercies Dragon Damnation", episodes: "ONA", note: 7 },{ label: "Fan Letter", episodes: "TV Special", note: 8 },{ label: "Heroines", episodes: "TV Special", note: 7 }, ] },
+        { id: "one-piece", img: "myranks/one-piece.webp", title: "One Piece", info: "Muitas temporadas: 1169 episódios" , studio: "Toei Animation", airedSeason: "1999-?", rewatch: "Impossible", mal: [ { label: "Muitas temporadas", episodes: 1169, note: 10 },{ label: "Film: Z", episodes: "1h47m", note: 6 },{ label: "Film: Gold", episodes: "2h0m", note: 6 },{ label: "Stampede", episodes: "1h41m", note: 7 },{ label: "Film: Red", episodes: "1h56m", note: 8 },{spacer: true},{ label: "Monsters: 103 Mercies Dragon Damnation", episodes: "ONA", note: 7 },{ label: "Fan Letter", episodes: "TV Special", note: 8 },{ label: "Heroines", episodes: "TV Special", note: 7 }, ] },
         { id: "haikyuu", img: "myranks/haikyuu.webp", title: "Haikyu!!", info: "4 temporadas: 85 episódios <br>1 Filme: 1h24m" , studio: "Production I.G", airedSeason: "2014-?", rewatch: "2 Times", mal: [ { label: "1ª temporada", episodes: 25, note: 8 }, { label: "2ª temporada", episodes: 25, note: 8 }, { label: "3ª temporada", episodes: 10, note: 10 }, { label: "4ª temporada I", episodes: 13, note: 8 }, { label: "4ª temporada II", episodes: 12, note: 9 }, { label: "Movie 5: The Dumpster Battle", episodes: "1h24m", note: 8 } ] },
         { id: "frieren", img: "myranks/frieren.webp", title: "Frieren: Beyond Journey's End", info: "(~) 1ª temporada: 28 episódios" , studio: "MADHOUSE", airedSeason: "2023-?", rewatch: "No", mal: [ { label: "1ª temporada", episodes: 28, note: 10 }, { label: "2ª temporada", episodes: 10, unwatched: true } ] },
         { id: "jjk", img: "myranks/jjk.webp", title: "Jujutsu Kaisen", info: "3 temporadas: 59 episódios </br> 1 Filme: 1h45m" , studio: "MAPPA", airedSeason: "2020-?", rewatch: "3rd Season Not Yet", mal: [ { label: "1ª temporada", episodes: 24, note: 8 }, { label: "Movie: Jujutsu Kaisen 0", episodes: "1h44m", note: 8 }, { label: "2ª temporada", episodes: 23, note: 9 }, { label: "3ª temporada", episodes: 12, note: 9 }, ] },
@@ -5699,7 +5730,7 @@ const rawWatchingData = [
 
       const ANNOUNCED_GROUP_LABELS = {
         watched: { text: "Watched Animes", color: "#34d399" }, // Verde (mesma cor da categoria)
-        unwatched: { text: "Unwatched or in Progress", color: "#f59e0b" }, // Âmbar (mesma cor do Watching Now)
+        unwatched: { text: "Unwatched or in Progress", color: "#f87171" }, // Vermelho coral (diferente do Watching Now)
       };
       
       const favoriteEpisodesData = [
