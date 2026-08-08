@@ -4636,7 +4636,7 @@
         // ── Som especial ao abrir o poster-lightbox do Re:ZERO ──
         const rezeroSound = new Audio('assets/rdb-rezero.mp3');
         rezeroSound.loop = true;
-        const REZERO_IDS = ['re-zero', 'rw-re-zero'];
+        const REZERO_IDS = ['re-zero', 're-zero-4'];
 
         // ── Som especial ao abrir o poster-lightbox do JJK (sem loop) ──
         const jjkSound = new Audio('assets/yuta-jjk.mp3');
@@ -5586,9 +5586,9 @@
       const rawAnimeData = [
         { id: "code-geass", img: "myranks/code-geass.webp", title: "Code Geass: Lelouch of the Rebellion", info: "2 temporadas: 50 episódios", studio: "Sunrise", airedSeason: "2006-2008", rewatch: "Not Yet", mal: [ { label: "1ª temporada", episodes: 25, note: 9 }, { label: "2ª temporada", episodes: 25, note: 10 } ] },
         { id: "hxh", img: "myranks/hxh.webp", title: "Hunter x Hunter (2011)", info: "1 temporada: 148 episódios" , studio: "MADHOUSE", airedSeason: "2011-2014", rewatch: "2 Times", mal: [ { label: "1 temporada", episodes: 148, note: 10 } ] },
+        { id: "frieren", img: "myranks/frieren.webp", title: "Frieren: Beyond Journey's End", info: "2 temporadas: 38 episódios" , studio: "MADHOUSE", airedSeason: "2023-?", rewatch: "No", mal: [ { label: "1ª temporada", episodes: 28, note: 10 }, { label: "2ª temporada", episodes: 10, note: 9 } ] },
         { id: "one-piece", img: "myranks/one-piece.webp", title: "One Piece", info: "Muitas temporadas: 1169 episódios" , studio: "Toei Animation", airedSeason: "1999-?", rewatch: "Impossible", mal: [ { label: "Muitas temporadas", episodes: 1169, note: 10 },{ label: "Film: Z", episodes: "1h47m", note: 6 },{ label: "Film: Gold", episodes: "2h0m", note: 6 },{ label: "Stampede", episodes: "1h41m", note: 7 },{ label: "Film: Red", episodes: "1h56m", note: 8 },{spacer: true},{ label: "Monsters: 103 Mercies Dragon Damnation", episodes: "ONA", note: 7 },{ label: "Fan Letter", episodes: "TV Special", note: 8 },{ label: "Heroines", episodes: "TV Special", note: 7 }, ] },
         { id: "haikyuu", img: "myranks/haikyuu.webp", title: "Haikyu!!", info: "4 temporadas: 85 episódios <br>1 Filme: 1h24m" , studio: "Production I.G", airedSeason: "2014-?", rewatch: "2 Times", mal: [ { label: "1ª temporada", episodes: 25, note: 8 }, { label: "2ª temporada", episodes: 25, note: 8 }, { label: "3ª temporada", episodes: 10, note: 10 }, { label: "4ª temporada I", episodes: 13, note: 8 }, { label: "4ª temporada II", episodes: 12, note: 9 }, { label: "Movie 5: The Dumpster Battle", episodes: "1h24m", note: 8 } ] },
-        { id: "frieren", img: "myranks/frieren.webp", title: "Frieren: Beyond Journey's End", info: "(~) 1ª temporada: 28 episódios" , studio: "MADHOUSE", airedSeason: "2023-?", rewatch: "No", mal: [ { label: "1ª temporada", episodes: 28, note: 10 }, { label: "2ª temporada", episodes: 10, unwatched: true } ] },
         { id: "jjk", img: "myranks/jjk.webp", title: "Jujutsu Kaisen", info: "3 temporadas: 59 episódios </br> 1 Filme: 1h45m" , studio: "MAPPA", airedSeason: "2020-?", rewatch: "3rd Season Not Yet", mal: [ { label: "1ª temporada", episodes: 24, note: 8 }, { label: "Movie: Jujutsu Kaisen 0", episodes: "1h44m", note: 8 }, { label: "2ª temporada", episodes: 23, note: 9 }, { label: "3ª temporada", episodes: 12, note: 9 }, ] },
         { id: "oshi-no-ko", img: "myranks/oshi-no-ko.webp", title: "Oshi no Ko", info: "3 temporadas: 35 episódios" , studio: "Doga Kobo", airedSeason: "2023-?", rewatch: "Yes", mal: [ { label: "1ª temporada", episodes: 11, note: 8 }, { label: "2ª temporada", episodes: 13, note: 7 }, { label: "3ª temporada", episodes: 11, note: 9 } ] },
         { id: "mushoku", img: "myranks/mushoku.webp", title: "Mushoku Tensei: Jobless Reincarnation", info: "2 temporadas: 47 episódios" , studio: "Studio Bind", airedSeason: "2021-?", rewatch: "First 2 Seasons", mal: [ { label: "1ª temporada I", episodes: 11, note: 8 }, { label: "1ª temporada II", episodes: 12, note: 8 }, { label: "2ª temporada I", episodes: 12, note: 7 }, { label: "2ª temporada II", episodes: 12, note: 8 } ] },
@@ -5666,19 +5666,20 @@
         { id: "the-worlds-finest-assassin", img: "myranks/the-worlds-finest-assassin.webp", title: "The World's Finest Assassin Gets Reincarnated in Another World as an Aristocrat", info: "1 temporada: 12 episódios" , studio: "Satelight", airedSeason: "2021-?", rewatch: "No", mal: [ { label: "1ª temporada", episodes: 12, note: 5 } ] },
         { id: "black-summoner", img: "myranks/black-summoner.webp", title: "Black Summoner", info: "12 episódios" , studio: "C2C", airedSeason: "2022", rewatch: "No", mal: [ { label: "1 temporada", episodes: 12, note: 5 } ] },
         { id: "akashic-records", img: "myranks/akashic-records.webp", title: "Akashic Records of Bastard Magic Instructor", info: "12 episódios" , studio: "Liden Films", airedSeason: "2017", rewatch: "No", mal: [ { label: "1 temporada", episodes: 12, note: 4 } ] },
+        { id: "trapped-in-a-dating-sim", img: "myranks/trapped-in-a-dating-sim.webp", title: "Trapped in a Dating Sim: The World of Otome Games is Tough for Mobs", info: "1 temporada: 12 episódios" , studio: "Project No.9", airedSeason: "2021-?", rewatch: "No", mal: [ { label: "1ª temporada", episodes: 12, note: 4 } ] },
+        { id: "haibara-teenage", img: "myranks/haibara-teenage.webp", title: "Haibara's Teenage New Game", info: "12 episódios", studio: "Studio Comet", airedSeason: "2026", rewatch: "Never", mal: [ { label: "1 temporada", episodes: 12, note: 3 } ] },
         { id: "cannon-busters", img: "myranks/cannon-busters.webp", title: "Cannon Busters", info: "12 episódios" , studio: "Satelight", airedSeason: "2019!", rewatch: "No", mal: [ { label: "1 temporada", episodes: 12, note: 4 } ] },
-        { id: "wind-breaker", img: "myranks/wind-breaker.webp", title: "Wind Breaker", info: "(~) 1ª temporada: 13 episódios" , studio: "CloverWorks", airedSeason: "2024-?", rewatch: "No", mal: [ { label: "1ª temporada", episodes: 13, note: 4 }, { label: "2ª temporada", episodes: 12, unwatched: true } ] },
-        { id: "trapped-in-a-dating-sim", img: "myranks/trapped-in-a-dating-sim.webp", title: "Trapped in a Dating Sim: The World of Otome Games is Tough for Mobs", info: "1 temporada: 12 episódios" , studio: "Project No.9", airedSeason: "2021-?", rewatch: "No", mal: [ { label: "1ª temporada", episodes: 12, note: 4 } ] }
+        { id: "wind-breaker", img: "myranks/wind-breaker.webp", title: "Wind Breaker", info: "(~) 1ª temporada: 13 episódios" , studio: "CloverWorks", airedSeason: "2024-?", rewatch: "No", mal: [ { label: "1ª temporada", episodes: 13, note: 3 }, { label: "2ª temporada", episodes: 12, unwatched: true } ] },
       ];
 
 const rawWatchingData = [
         // Non-Seasonal Anime
         { id: "re-zero-4", img: "watchingnow/re-zero.webp", title: "Re:ZERO - Starting Life in Another World", info: "4 temporadas: 85 episódios", season: null, url: "https://www.anime-planet.com/anime/rezero-starting-life-in-another-world-season-4", crunchyroll: "https://www.crunchyroll.com/pt-br/series/GRGG9798R/rezero--starting-life-in-another-world-", seasons: [25, 25, 16, 19], cours: [null, [13, 12], null, null], studio: "White Fox", airedSeason: "2016-?", rewatch: "Only Season 1" },
-        { id: "rw-demon-slayer", img: "myranks/demon-slayer.webp", title: "Demon Slayer: Kimetsu no Yaiba", info: "5 temporadas: 63 episódios <br>1 Filme: 2h35m" , studio: "ufotable", airedSeason: "2019-?", rewatch: "Season 1", mal: [ { label: "1ª temporada", episodes: 26, note: 7 }, { label: "2ª temporada", episodes: 7, note: 6 }, { label: "3ª temporada", episodes: 11, note: 8 }, { label: "4ª temporada", episodes: 11, note: 7 }, { label: "5ª temporada", episodes: 8, note: 7 }, { label: "Movie: Infinity Castle Part 1", episodes: "2h35m", note: 8 } ] },
+        { id: "rw-demon-slayer", img: "myranks/demon-slayer.webp", title: "Demon Slayer: Kimetsu no Yaiba", info: "5 temporadas: 63 episódios <br>1 Filme: 2h35m", season: null, url: "https://www.anime-planet.com/anime/demon-slayer-kimetsu-no-yaiba", crunchyroll: "https://www.crunchyroll.com/pt-br/series/GY5P48356/demon-slayer-kimetsu-no-yaiba", seasons: [26, 7, 11, 11, 8, 1], movieSeasons: [5], cours: [null, null, null, null, null], studio: "ufotable", airedSeason: "2019-?", rewatch: "Season 1" },   
         { id: "my-teen-romantic-comedy", img: "watchingnow/my-teen-romantic-comedy.webp", title: "My Teen Romantic Comedy SNAFU", info: "3 temporadas: 39 episódios", url: "https://www.anime-planet.com/anime/my-teen-romantic-comedy-snafu", crunchyroll: "", season: null, seasons: [13, 13, 13], studio: "Brain's Base / feel", airedSeason: "2013-2020"},
-        { id: "haikyuu-dumpster", img: "watchingnow/haikyuu.webp", title: "Haikyu!! The Dumpster Battle", info: "Filme: 1h25m", season: null, url: "https://www.anime-planet.com/anime/haikyuu-movie-5-the-dumpster-battle", crunchyroll: "https://www.crunchyroll.com/pt-br/watch/GD9UE9XZ7/haikyu-the-dumpster-battle", studio: "Production I.G", airedSeason: "2024"},
+        { id: "haikyuu-dumpster", img: "watchingnow/haikyuu.webp", title: "Haikyu!! The Dumpster Battle", info: "Filme: 1h25m", season: null, url: "https://www.anime-planet.com/anime/haikyuu-movie-5-the-dumpster-battle", crunchyroll: "https://www.crunchyroll.com/pt-br/watch/GD9UE9XZ7/haikyu-the-dumpster-battle", seasons: [1], studio: "Production I.G", airedSeason: "2024"},
         { id: "mob", img: "watchingnow/mob.webp", title: "Mob Psycho 100", info: "3 temporadas: 37 episódios", url: "https://www.anime-planet.com/anime/mob-psycho-100", crunchyroll: "https://www.crunchyroll.com/pt-br/series/GY190DKQR/mob-psycho-100", season: null, seasons: [12, 13, 12], studio: "Bones", airedSeason: "2016-2022" },
-        { id: "konosuba", img: "watchingnow/konosuba.webp", title: "Konosuba - God's Blessing on this Wonderful World", info: "3 temporadas: 31 episódios <br>1 Filme: 1h30m", url: "https://www.anime-planet.com/anime/konosuba-gods-blessing-on-this-wonderful-world", crunchyroll: "https://www.crunchyroll.com/pt-br/series/GYE5K3GQR/konosuba--gods-blessing-on-this-wonderful-world", season: null, seasons: [10, 10, 11], studio: "Studio Deen / J.C. Staff", airedSeason: "2016" },
+        { id: "konosuba", img: "watchingnow/konosuba.webp", title: "Konosuba - God's Blessing on this Wonderful World", info: "3 temporadas: 31 episódios <br>1 Filme: 1h30m", url: "https://www.anime-planet.com/anime/konosuba-gods-blessing-on-this-wonderful-world", crunchyroll: "https://www.crunchyroll.com/pt-br/series/GYE5K3GQR/konosuba--gods-blessing-on-this-wonderful-world", season: null, seasons: [10, 10, 1, 11], movieSeasons: [2], studio: "Studio Deen / J.C. Staff", airedSeason: "2016" },
         { id: "rw-aot", img: "watchingnow/aot.webp", title: "Attack on Titan", info: "4 temporadas: 94 episódios", season: null, url: "https://www.anime-planet.com/anime/attack-on-titan-the-final-season-part-ii", crunchyroll: "https://www.crunchyroll.com/pt-br/series/GR751KNZY/attack-on-titan", seasons: [25, 12, 22, 35], cours: [null, null, [12, 10], [16, 12]], studio: "MAPPA", airedSeason: "2022" },
 
 // Summer 2026
@@ -5702,13 +5703,11 @@ const rawWatchingData = [
         { id: "imfwtspgimc", img: "watchingnow/imfwtspgimc.webp", title: "I Made Friends with the Second Prettiest Girl in My Class", info: "10 episódios - Progress: 10/12", season: "spring-2026", url: "https://www.anime-planet.com/anime/i-made-friends-with-the-second-prettiest-girl-in-my-class", crunchyroll: "https://www.crunchyroll.com/pt-br/series/GT00371673/i-made-friends-with-the-second-prettiest-girl-in-my-class", studio: "CONNECT", airedSeason: "2026"},
         { id: "farming-life-2", img: "watchingnow/farming-life.webp", title: "Farming Life in Another World", info: "2ª temporada: 12 episódios - Progress: 7/12", season: "spring-2026", url: "https://www.anime-planet.com/anime/farming-life-in-another-world-2", crunchyroll: "", studio: "Zero-G", airedSeason: "2026"},
         { id: "otaku-gyaru", img: "watchingnow/otaku-gyaru.webp", title: "Gals Can't Be Kind to Otaku", info: "12 episódios - Progress: 7/12", season: "spring-2026", url: "https://www.anime-planet.com/anime/gals-cant-be-kind-to-otaku", crunchyroll: "https://www.crunchyroll.com/pt-br/series/GT00371662/gals-cant-be-kind-to-otaku", studio: "TMS Entertainment", airedSeason: "2026"},
-        { id: "haibara-teenage", img: "watchingnow/haibara-teenage.webp", title: "Haibara's Teenage New Game", info: "12 episódios - Progress: 11/12", season: "spring-2026", url: "https://www.anime-planet.com/anime/haibaras-teenage-new-game", crunchyroll: "https://www.crunchyroll.com/pt-br/series/GT00371668/haibaras-teenage-new-game", studio: "Studio Comet", airedSeason: "2026"},
         { id: "kill-blue", img: "watchingnow/kill-blue.webp", title: "Kill Blue", info: "12 episódios - Progress: 6/12", season: "spring-2026", url: "https://www.anime-planet.com/anime/kill-blue", crunchyroll: "https://www.crunchyroll.com/pt-br/series/GT00371896/kill-blue", studio: "CUE", airedSeason: "2026"},
         { id: "klutzy-class-monitor", img: "watchingnow/klutzy-class-monitor.webp", title: "The Klutzy Class Monitor and the Girl with the Short Skirt", info: "12 episódios - Progress: 9/12", season: "spring-2026", url: "https://www.anime-planet.com/anime/the-klutzy-class-monitor-and-the-girl-with-the-short-skirt", crunchyroll: "https://www.crunchyroll.com/pt-br/series/GT00371923/the-klutzy-class-monitor-and-the-girl-with-the-short-skirt", studio: "Zero-G", airedSeason: "2026"},
         { id: "angel-next-door-2", img: "watchingnow/angel-next-door.webp", title: "The Angel Next Door Spoils Me Rotten", info: "2ª temporada: 12 episódios - Progress: 4/12", season: "spring-2026", url: "https://www.anime-planet.com/anime/the-angel-next-door-spoils-me-rotten-season-2", crunchyroll: "https://www.crunchyroll.com/pt-br/series/G9VHN91DJ/the-angel-next-door-spoils-me-rotten", studio: "Project No.9", airedSeason: "2026"},
 
         // Winter 2026
-        { id: "frieren-2", img: "watchingnow/frieren.webp", title: "Frieren: Beyond Journey's End", info: "2ª temporada: 10 episódios - Progress: 8/10", season: "winter-2026", url: "https://www.anime-planet.com/anime/frieren-beyond-journeys-end-season-2", crunchyroll: "https://www.crunchyroll.com/pt-br/series/GG5H5XQX4/frieren-beyond-journeys-end", studio: "MADHOUSE", airedSeason: "2026"},
         { id: "midnight-heart", img: "watchingnow/midnight-heart.webp", title: "Tune In to the Midnight Heart", info: "12 episódios - Progress: 8/12", season: "winter-2026", url: "https://www.anime-planet.com/anime/tune-in-to-the-midnight-heart", crunchyroll: "https://www.crunchyroll.com/pt-br/series/GT00365772/tune-in-to-the-midnight-heart", studio: "Gekkou", airedSeason: "2026"},
 
         // On Hold
@@ -5990,7 +5989,8 @@ const rawWatchingData = [
         "yamada-kun-lv999",
         "masamune-kuns-revenge",
         "opposites",
-        "prism-rondo"
+        "prism-rondo",
+        "haibara-teenage"
       ];
 
       const isekaiIds = [
@@ -6461,10 +6461,27 @@ const rawWatchingData = [
                 let acc = 0;
                 const seasonTotal = anime.seasons.reduce((a, b) => a + b, 0);
                 if (anime.seasons.length > 1) {
+                  // Alguns animes intercalam um filme canônico entre as
+                  // temporadas dentro do próprio array "seasons" (ex: Konosuba
+                  // [10,10,1,11], onde o "1" é o filme). O array opcional
+                  // "movieSeasons" lista (0-indexado) quais posições desse
+                  // array são na verdade filmes, não temporadas — assim a
+                  // numeração ("1ª", "2ª"...) pula esses índices e o
+                  // marcador/zona mostra "Filme" em vez de virar uma
+                  // "temporada" de 1 episódio só.
+                  const movieIdxSet = new Set(Array.isArray(anime.movieSeasons) ? anime.movieSeasons : []);
+                  let seasonNum = 0;
+                  const seasonLabels = anime.seasons.map((epCount, idx) => {
+                    if (movieIdxSet.has(idx)) return { isMovie: true, label: 'Filme' };
+                    seasonNum++;
+                    return { isMovie: false, label: `${seasonNum}ª temporada` };
+                  });
+
                   seasonMarksHtml = anime.seasons.slice(0, -1).map((epCount, idx) => {
                     acc += epCount;
                     const markPct = Math.max(0, Math.min(100, (acc / seasonTotal) * 100));
-                    return `<span class="watch-progress-season-mark" style="left:${markPct}%;" title="Fim da ${idx + 1}ª temporada"></span>`;
+                    const { isMovie, label } = seasonLabels[idx];
+                    return `<span class="watch-progress-season-mark" style="left:${markPct}%;" title="Fim ${isMovie ? 'do' : 'da'} ${label}"></span>`;
                   }).join('');
 
                   let zoneAcc = 0;
@@ -6473,7 +6490,9 @@ const rawWatchingData = [
                     zoneAcc += epCount;
                     const endPct = Math.max(0, Math.min(100, (zoneAcc / seasonTotal) * 100));
                     const widthPct = Math.max(0, endPct - startPct);
-                    return `<span class="watch-progress-season-zone" style="left:${startPct}%;width:${widthPct}%;" title="${idx + 1}ª temporada: ${epCount} episódios"></span>`;
+                    const { label } = seasonLabels[idx];
+                    const epLabel = epCount === 1 ? 'episódio' : 'episódios';
+                    return `<span class="watch-progress-season-zone" style="left:${startPct}%;width:${widthPct}%;" title="${label}: ${epCount} ${epLabel}"></span>`;
                   }).join('');
                 }
 
