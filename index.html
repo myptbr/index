@@ -433,21 +433,21 @@
       z-index: 0;
       background-size: cover;
       background-position: center;
-      filter: blur(24px) saturate(1.6) brightness(0.6);
+      filter: blur(24px) saturate(2.2) brightness(0.85);
       opacity: 0;
       transition: opacity 0.4s ease;
       pointer-events: none;
     }
 
     .search-result-ambient.ready {
-      opacity: 0.9;
+      opacity: 1;
     }
 
     .search-result-ambient-shade {
       position: absolute;
       inset: 0;
       z-index: 1;
-      background: linear-gradient(180deg, rgba(10,10,14,0.1) 0%, rgba(10,10,14,0.5) 58%, rgba(10,10,14,0.88) 100%);
+      background: linear-gradient(180deg, rgba(10,10,14,0.05) 0%, rgba(10,10,14,0.35) 58%, rgba(10,10,14,0.8) 100%);
       pointer-events: none;
     }
 
@@ -1931,6 +1931,9 @@
       --mal-blue: #7fb2ff;
       --mal-gold: #f4c463;
       --mal-low: #a9a4bd;
+      --mal-tier6: #5ec4c9;
+      --mal-tier7: #81d185;
+      --mal-tier9: #c792ea;
       display: flex;
       flex-direction: column;
       gap: 8px;
@@ -2019,15 +2022,30 @@
       transition: transform 0.15s ease, filter 0.15s ease;
     }
 
+    .rank-mal-label--mal .mal-btn-logo {
+      display: block;
+      width: auto;
+      height: 17px;
+      max-width: none;
+      object-fit: contain;
+      border-radius: 0;
+      box-shadow: none;
+      transform-origin: left center;
+      transition: transform 0.15s ease, filter 0.15s ease;
+    }
+
     a.rank-mal-label--anime-planet:hover .anime-planet-btn-logo,
     a.rank-mal-label--anime-planet:focus-visible .anime-planet-btn-logo,
     a.rank-mal-label--crunchyroll:hover .crunchyroll-btn-logo,
-    a.rank-mal-label--crunchyroll:focus-visible .crunchyroll-btn-logo {
+    a.rank-mal-label--crunchyroll:focus-visible .crunchyroll-btn-logo,
+    a.rank-mal-label--mal:hover .mal-btn-logo,
+    a.rank-mal-label--mal:focus-visible .mal-btn-logo {
       filter: brightness(1.15);
     }
 
     a.rank-mal-label--anime-planet svg,
-    a.rank-mal-label--crunchyroll svg {
+    a.rank-mal-label--crunchyroll svg,
+    a.rank-mal-label--mal svg {
       opacity: 0.7;
       transition: opacity 0.15s ease;
     }
@@ -2035,13 +2053,16 @@
     a.rank-mal-label--anime-planet:hover svg,
     a.rank-mal-label--anime-planet:focus-visible svg,
     a.rank-mal-label--crunchyroll:hover svg,
-    a.rank-mal-label--crunchyroll:focus-visible svg {
+    a.rank-mal-label--crunchyroll:focus-visible svg,
+    a.rank-mal-label--mal:hover svg,
+    a.rank-mal-label--mal:focus-visible svg {
       opacity: 1;
     }
 
     @media (min-width: 761px) {
       a.rank-mal-label--anime-planet svg,
-      a.rank-mal-label--crunchyroll svg {
+      a.rank-mal-label--crunchyroll svg,
+      a.rank-mal-label--mal svg {
         display: none;
       }
     }
@@ -2053,6 +2074,15 @@
     a.rank-mal-label--crunchyroll:hover,
     a.rank-mal-label--crunchyroll:focus-visible {
       color: #ff640a;
+    }
+
+    a.rank-mal-label--mal {
+      display: inline-flex;
+    }
+
+    a.rank-mal-label--mal:hover,
+    a.rank-mal-label--mal:focus-visible {
+      color: #2e51a2;
     }
 
     .rank-mal-rows {
@@ -2169,7 +2199,7 @@
         justify-content: center;
       }
 
-      a.rank-mal-label:not(.rank-mal-label--anime-planet):not(.rank-mal-label--crunchyroll) {
+      a.rank-mal-label:not(.rank-mal-label--anime-planet):not(.rank-mal-label--crunchyroll):not(.rank-mal-label--mal) {
         display: none;
       }
     }
@@ -2262,18 +2292,43 @@
       text-shadow: none;
     }
 
-    /* Notas ≥ 9: destaque dourado, para saltar aos olhos como favoritas. */
-    .rank-mal-note.tier-high {
-      color: var(--mal-gold);
-      background: linear-gradient(135deg, rgba(244,196,99,0.24), rgba(244,196,99,0.06));
-      border-color: rgba(244,196,99,0.4);
-    }
-
-    /* Notas < 7: mais discretas, sem competir visualmente com as boas. */
-    .rank-mal-note.tier-low {
+    /* ── Paleta por faixa de nota (0-5 mesma cor, depois uma cor própria
+       pra cada nota de 6 a 10), do mais discreto ao mais vibrante. ── */
+    .rank-mal-note.tier-05 {
       color: var(--mal-low);
       background: rgba(169,164,189,0.12);
       border-color: rgba(169,164,189,0.22);
+    }
+
+    .rank-mal-note.tier-6 {
+      color: var(--mal-tier6);
+      background: linear-gradient(135deg, rgba(94,196,201,0.22), rgba(94,196,201,0.06));
+      border-color: rgba(94,196,201,0.35);
+    }
+
+    .rank-mal-note.tier-7 {
+      color: var(--mal-tier7);
+      background: linear-gradient(135deg, rgba(129,209,133,0.22), rgba(129,209,133,0.06));
+      border-color: rgba(129,209,133,0.35);
+    }
+
+    .rank-mal-note.tier-8 {
+      color: var(--mal-blue);
+      background: linear-gradient(135deg, rgba(127,178,255,0.22), rgba(127,178,255,0.07));
+      border-color: rgba(127,178,255,0.32);
+    }
+
+    .rank-mal-note.tier-9 {
+      color: var(--mal-tier9);
+      background: linear-gradient(135deg, rgba(199,146,234,0.24), rgba(199,146,234,0.07));
+      border-color: rgba(199,146,234,0.4);
+    }
+
+    /* Nota 10: destaque dourado máximo, pra saltar aos olhos como favorita. */
+    .rank-mal-note.tier-10 {
+      color: var(--mal-gold);
+      background: linear-gradient(135deg, rgba(244,196,99,0.28), rgba(244,196,99,0.08));
+      border-color: rgba(244,196,99,0.45);
     }
 
     .rank-mal-note.empty {
@@ -2735,12 +2790,12 @@
       /* Botão "MyAnimeList" (normalmente escondido no mobile pela regra
          geral acima) volta a aparecer aqui dentro do lightbox — mas sem
          navegar pra lugar nenhum (ver JS: preventDefault nesse breakpoint). */
-      .poster-lightbox:not(.simple-mode) a.rank-mal-label:not(.rank-mal-label--anime-planet):not(.rank-mal-label--crunchyroll) {
+      .poster-lightbox:not(.simple-mode) a.rank-mal-label:not(.rank-mal-label--anime-planet):not(.rank-mal-label--crunchyroll):not(.rank-mal-label--mal) {
         display: inline-flex;
         cursor: default;
       }
 
-      .poster-lightbox:not(.simple-mode) a.rank-mal-label:not(.rank-mal-label--anime-planet):not(.rank-mal-label--crunchyroll) svg {
+      .poster-lightbox:not(.simple-mode) a.rank-mal-label:not(.rank-mal-label--anime-planet):not(.rank-mal-label--crunchyroll):not(.rank-mal-label--mal) svg {
         display: none;
       }
     }
@@ -2903,6 +2958,43 @@
       font-weight: 900;
       color: rgba(255,255,255,0.45);
       letter-spacing: -0.01em;
+    }
+
+    /* Tag combinada "Watching Now: <divisão>" (usada quando um anime de
+       "Announced Sequels" também está em Watching Now) — cada metade tem
+       sua própria cor, mas o botão inteiro é um único link clicável. */
+    .poster-lightbox-list .list-tag-split .list-tag-part + .list-tag-part {
+      margin-left: -2px;
+    }
+
+    /* No hover/focus, em vez da linha sólida (currentColor) normal, o
+       sublinhado vira uma listra alternando as duas cores da tag (ex:
+       laranja do "Watching Now" / azul da divisão), reforçando que o
+       botão combina as duas informações. */
+    .poster-lightbox-list .list-tag-split {
+      position: relative;
+      border-bottom-color: transparent;
+    }
+
+    .poster-lightbox-list .list-tag-split::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -1px;
+      height: 1px;
+      background-image: linear-gradient(
+        90deg,
+        var(--tag-color, var(--glow-accent)) 0%,
+        var(--tag-color-2, var(--glow-accent)) 100%
+      );
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+
+    .poster-lightbox-list .list-tag-split:hover::after,
+    .poster-lightbox-list .list-tag-split:focus-visible::after {
+      opacity: 1;
     }
 
     .poster-lightbox-list .list-sep {
@@ -3874,6 +3966,7 @@
       aspect-ratio: 16 / 9;
       border-radius: 12px;
       cursor: inherit;
+      touch-action: pan-y;
     }
 
     .fav-ep-media-main .thumb,
@@ -4702,7 +4795,8 @@
           // "All Animes" / global ranking) — ex: Re:Zero e Mushoku Tensei.
           // Se o anime só existe no "Watching Now" (ex: Konosuba), o bloco
           // de Rewatch é omitido por completo.
-          const hasMainListEntry = (typeof animeData !== 'undefined') && animeData.some(a => a.id === animeId);
+          const animeTitleForId = (typeof ANIME_TITLE_BY_ID !== 'undefined') ? ANIME_TITLE_BY_ID[animeId] : undefined;
+          const hasMainListEntry = (typeof animeData !== 'undefined') && animeData.some(a => a.id === animeId || (animeTitleForId && a.title === animeTitleForId));
           const fields = (isWatchingNow && !hasMainListEntry)
             ? META_FIELDS.filter(field => field.key !== 'rewatch')
             : META_FIELDS;
@@ -4773,17 +4867,26 @@
             </a>`;
         }
 
+        function buildWatchNowMalButtonHtml(url) {
+          if (!url) return '';
+          return `
+            <a class="rank-mal-label rank-mal-label--mal" href="${url}" target="_blank" rel="noopener">
+              <img class="mal-btn-logo" src="assets/credits-logos/myanimelist.webp" alt="MyAnimeList" loading="lazy" decoding="async">
+              ${EXTERNAL_LINK_ICON_SVG}
+            </a>`;
+        }
 
-        function renderMalScores(animeId, isWatchingNow, animePlanetUrl, crunchyrollUrl) {
+
+        function renderMalScores(animeId, isWatchingNow, animePlanetUrl, crunchyrollUrl, watchNowMalUrl) {
           if (!lightboxMal) return;
 
           // Cards do "Watching Now" não têm notas do MyAnimeList — no lugar
-          // do bloco de notas, mostra o botão do Anime-Planet (sempre que
-          // houver link) e, só em telas mobile (via CSS), também um botão
-          // "Watch Now" que tenta abrir o anime direto no app do
-          // Crunchyroll, quando existir link.
+          // do bloco de notas, mostra os botões do Anime-Planet, Crunchyroll
+          // e MyAnimeList (sempre que houver link) e, só em telas mobile
+          // (via CSS), também um botão "Watch Now" que tenta abrir o anime
+          // direto no app do Crunchyroll, quando existir link.
           if (isWatchingNow) {
-            const watchNowButtonsHtml = `${buildAnimePlanetButtonHtml(animePlanetUrl)}${buildCrunchyrollButtonHtml(crunchyrollUrl)}`;
+            const watchNowButtonsHtml = `${buildAnimePlanetButtonHtml(animePlanetUrl)}${buildCrunchyrollButtonHtml(crunchyrollUrl)}${buildWatchNowMalButtonHtml(watchNowMalUrl)}`;
             lightboxMal.innerHTML = watchNowButtonsHtml
               ? `<div class="watch-now-links">${watchNowButtonsHtml}</div>`
               : '';
@@ -4833,9 +4936,13 @@
               ? `${escapeHtml(String(entry.note))}<span class="rank-mal-note-max">/10</span>`
               : (isUnwatched ? '-/-' : '—');
             const noteValue = hasNote ? parseFloat(entry.note) : NaN;
-            const tierClass = hasNote && !isNaN(noteValue)
-              ? (noteValue >= 9 ? ' tier-high' : (noteValue < 7 ? ' tier-low' : ''))
-              : '';
+            const tierClass = (() => {
+              if (!hasNote || isNaN(noteValue)) return '';
+              const bucket = Math.floor(noteValue);
+              if (bucket >= 10) return ' tier-10';
+              if (bucket <= 5) return ' tier-05';
+              return ' tier-' + bucket; // tier-6, tier-7, tier-8, tier-9
+            })();
             const noteClass = hasNote
               ? tierClass
               : (isUnwatched ? ' unwatched' : ' empty');
@@ -4875,13 +4982,9 @@
           const malUrl = `https://myanimelist.net/animelist/${malUsername}?s=${encodeURIComponent(malSearchTitle)}&order=-14`;
 
           lightboxMal.innerHTML = `
-            <a class="rank-mal-label" href="${malUrl}" target="_blank" rel="noopener">
-              MyAnimeList
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                <path d="M15 3h6v6"></path>
-                <path d="M10 14 21 3"></path>
-              </svg>
+            <a class="rank-mal-label rank-mal-label--mal" href="${malUrl}" target="_blank" rel="noopener">
+              <img class="mal-btn-logo" src="assets/credits-logos/myanimelist.webp" alt="MyAnimeList" loading="lazy" decoding="async">
+              ${EXTERNAL_LINK_ICON_SVG}
             </a>
             <div class="rank-mal-rows">${rowsHtml}</div>`;
         }
@@ -5225,6 +5328,9 @@
               });
             }
           }
+          // "Watching Now" sempre aparece primeiro entre as tags, quando
+          // presente — as demais mantêm a ordem em que foram adicionadas.
+          tags.sort((a, b) => (a.key === 'watching' ? -1 : 0) - (b.key === 'watching' ? -1 : 0));
           return tags;
         }
 
@@ -5279,11 +5385,12 @@
           // um botão pra ele logo abaixo da imagem. O watchingnow usa o
           // painel completo (igual ao myranks), com esse mesmo botão no
           // lugar do bloco do MyAnimeList (ver renderMalScores).
-          const isMyRanks = /myranks\//.test(src);
-          const isWatchingNow = /watchingnow\//.test(src);
+          const isWatchingNow = item.hasAttribute('data-watching-now');
+          const isMyRanks = /myranks\//.test(src) && !isWatchingNow;
           const animePlanetUrl = item.getAttribute('data-anime-planet-url')
             || item.getAttribute('data-watchnow-anime-planet-url');
           const crunchyrollUrl = item.getAttribute('data-crunchyroll-url');
+          const watchNowMalUrl = item.getAttribute('data-watchnow-mal-url');
           lightbox.classList.toggle('simple-mode', !(isMyRanks || isWatchingNow));
 
           if (lightboxSimpleLink) {
@@ -5341,15 +5448,64 @@
             const accentColor = (division && division.color) || (tags[0] && tags[0].color) || null;
             lightboxList.style.setProperty('--list-color', accentColor || 'var(--glow-accent)');
 
-            const tagsHtml = tags
-              .map(t => `<button type="button" class="list-tag" data-mode="${t.key}" data-target-id="${escapeHtml(item.id)}" style="--tag-color:${t.color || 'var(--glow-accent)'}">${t.position != null ? `<span class="list-tag-rank">#${t.position}</span>` : ''}${escapeHtml(t.label)}</button>`)
-              .join('<span class="list-sep"></span>');
             // No card de "Announced Sequels", a subdivisão "Watched Animes" é
             // redundante (o próprio contexto já indica isso) e não deve
             // aparecer como tag verde no modal — some só ela, mantendo as
             // demais divisões (ex: "Summer Season 2026") normalmente.
             const hideDivision = division && division.text === ANNOUNCED_GROUP_LABELS.watched.text;
-            const divisionHtml = (division && !hideDivision)
+            // Quando a subdivisão é "Unwatched or in Progress", o anime em
+            // questão normalmente já está sendo assistido (existe uma
+            // entrada correspondente em "Watching Now") — nesse caso, em
+            // vez do texto genérico e sem clique, funde a tag "Watching
+            // Now" com a divisão de temporada dele lá na Watching Now
+            // (ex: "Non-Seasonal Anime", "Summer Season 2026") num único
+            // botão "Watching Now: <divisão>" (cada metade com sua cor),
+            // que leva direto pro card correspondente.
+            const isUnwatchedDivision = division && division.text === ANNOUNCED_GROUP_LABELS.unwatched.text;
+            let watchingEntry = null;
+            if (isUnwatchedDivision) {
+              watchingEntry = watchingData.find(a => a.id === item.id)
+                || watchingData.find(a => a.title === title);
+            }
+
+            let mergedWatchingTagHtml = '';
+            let effectiveTags = tags;
+            if (watchingEntry) {
+              // A tag "watching" avulsa (se existir) vira redundante — a
+              // versão combinada abaixo já cobre essa informação.
+              effectiveTags = tags.filter(t => t.key !== 'watching');
+              const seasonKey = watchingEntry.season || null;
+              const seasonLabel = seasonKey
+                ? (WATCHING_SEASON_LABELS[seasonKey] || { text: seasonKey, color: 'var(--muted)' })
+                : WATCHING_NO_SEASON_LABEL;
+              const watchingColor = CATEGORY_HOVER_COLOR.watching || 'var(--glow-accent)';
+              const seasonColor = seasonLabel.color || 'var(--glow-accent)';
+              mergedWatchingTagHtml = `<button type="button" class="list-tag list-tag-split" data-mode="watching" data-target-id="${escapeHtml(watchingEntry.id)}" style="--tag-color:${watchingColor};--tag-color-2:${seasonColor}"><span class="list-tag-part" style="color:${watchingColor}">Watching Now:</span><span class="list-tag-part" style="color:${seasonColor}">${escapeHtml(seasonLabel.text)}</span></button>`;
+            } else {
+              // Quando o próprio item já é o card do "Watching Now" (aberto
+              // direto dessa lista) e tem uma divisão de temporada acima
+              // dele (ex: "Spring Season 2026"), funde a tag "Watching Now"
+              // com essa divisão no mesmo estilo usado acima — vira um
+              // único botão "Watching Now: <temporada>", igual ao efeito do
+              // "Announced Sequels", em vez de duas tags separadas.
+              const watchingTag = tags.find(t => t.key === 'watching');
+              if (watchingTag && division && !hideDivision) {
+                effectiveTags = tags.filter(t => t.key !== 'watching');
+                const watchingColor = watchingTag.color || CATEGORY_HOVER_COLOR.watching || 'var(--glow-accent)';
+                const seasonColor = division.color || 'var(--glow-accent)';
+                mergedWatchingTagHtml = `<button type="button" class="list-tag list-tag-split" data-mode="watching" data-target-id="${escapeHtml(item.id)}" style="--tag-color:${watchingColor};--tag-color-2:${seasonColor}"><span class="list-tag-part" style="color:${watchingColor}">Watching Now:</span><span class="list-tag-part" style="color:${seasonColor}">${escapeHtml(division.text)}</span></button>`;
+              }
+            }
+
+            const restTagsHtml = effectiveTags
+              .map(t => `<button type="button" class="list-tag" data-mode="${t.key}" data-target-id="${escapeHtml(item.id)}" style="--tag-color:${t.color || 'var(--glow-accent)'}">${t.position != null ? `<span class="list-tag-rank">#${t.position}</span>` : ''}${escapeHtml(t.label)}</button>`)
+              .join('<span class="list-sep"></span>');
+
+            const tagsHtml = mergedWatchingTagHtml
+              ? mergedWatchingTagHtml + (restTagsHtml ? '<span class="list-sep"></span>' + restTagsHtml : '')
+              : restTagsHtml;
+
+            const divisionHtml = (division && !hideDivision && !watchingEntry && !mergedWatchingTagHtml)
               ? `<span class="list-sep"></span><span class="list-division">${escapeHtml(division.text)}</span>`
               : '';
 
@@ -5382,7 +5538,7 @@
           }
 
           renderMeta(item.id, isWatchingNow);
-          renderMalScores(item.id, isWatchingNow, animePlanetUrl, crunchyrollUrl);
+          renderMalScores(item.id, isWatchingNow, animePlanetUrl, crunchyrollUrl, watchNowMalUrl);
           // renderRatings(item.id); // sistema de notas desativado do site (ver comentário no HTML acima)
         }
 
@@ -5488,7 +5644,7 @@
         // funcionando normalmente como link pro MyAnimeList. ──
         if (lightboxMal) {
           lightboxMal.addEventListener('click', function(e) {
-            const btn = e.target.closest('a.rank-mal-label:not(.rank-mal-label--anime-planet):not(.rank-mal-label--crunchyroll)');
+            const btn = e.target.closest('a.rank-mal-label:not(.rank-mal-label--anime-planet):not(.rank-mal-label--crunchyroll):not(.rank-mal-label--mal)');
             if (!btn) return;
             if (window.matchMedia('(max-width: 760px)').matches) {
               e.preventDefault();
@@ -5587,7 +5743,7 @@
         { id: "code-geass", img: "myranks/code-geass.webp", title: "Code Geass: Lelouch of the Rebellion", info: "2 temporadas: 50 episódios", studio: "Sunrise", airedSeason: "2006-2008", rewatch: "Not Yet", mal: [ { label: "1ª temporada", episodes: 25, note: 9 }, { label: "2ª temporada", episodes: 25, note: 10 } ] },
         { id: "hxh", img: "myranks/hxh.webp", title: "Hunter x Hunter (2011)", info: "1 temporada: 148 episódios" , studio: "MADHOUSE", airedSeason: "2011-2014", rewatch: "2 Times", mal: [ { label: "1 temporada", episodes: 148, note: 10 } ] },
         { id: "frieren", img: "myranks/frieren.webp", title: "Frieren: Beyond Journey's End", info: "2 temporadas: 38 episódios" , studio: "MADHOUSE", airedSeason: "2023-?", rewatch: "No", mal: [ { label: "1ª temporada", episodes: 28, note: 10 }, { label: "2ª temporada", episodes: 10, note: 9 } ] },
-        { id: "one-piece", img: "myranks/one-piece.webp", title: "One Piece", info: "Muitas temporadas: 1169 episódios" , studio: "Toei Animation", airedSeason: "1999-?", rewatch: "Impossible", mal: [ { label: "Muitas temporadas", episodes: 1169, note: 10 },{ label: "Film: Z", episodes: "1h47m", note: 6 },{ label: "Film: Gold", episodes: "2h0m", note: 6 },{ label: "Stampede", episodes: "1h41m", note: 7 },{ label: "Film: Red", episodes: "1h56m", note: 8 },{spacer: true},{ label: "Monsters: 103 Mercies Dragon Damnation", episodes: "ONA", note: 7 },{ label: "Fan Letter", episodes: "TV Special", note: 8 },{ label: "Heroines", episodes: "TV Special", note: 7 }, ] },
+        { id: "one-piece", img: "myranks/one-piece.webp", title: "One Piece", info: "Muitas temporadas: 1169 episódios" , studio: "Toei Animation", airedSeason: "1999-?", rewatch: "Impossible", mal: [ { label: "Muitas temporadas", episodes: 1169, note: 10 },{ label: "Film: Z", episodes: "1h47m", note: 7 },{ label: "Film: Gold", episodes: "2h0m", note: 7 },{ label: "Stampede", episodes: "1h41m", note: 7 },{ label: "Film: Red", episodes: "1h56m", note: 8 },{spacer: true},{ label: "Monsters: 103 Mercies Dragon Damnation", episodes: "ONA", note: 7 },{ label: "Fan Letter", episodes: "TV Special", note: 8 },{ label: "Heroines", episodes: "TV Special", note: 7 }, ] },
         { id: "haikyuu", img: "myranks/haikyuu.webp", title: "Haikyu!!", info: "4 temporadas: 85 episódios <br>1 Filme: 1h24m" , studio: "Production I.G", airedSeason: "2014-?", rewatch: "2 Times", mal: [ { label: "1ª temporada", episodes: 25, note: 8 }, { label: "2ª temporada", episodes: 25, note: 8 }, { label: "3ª temporada", episodes: 10, note: 10 }, { label: "4ª temporada I", episodes: 13, note: 8 }, { label: "4ª temporada II", episodes: 12, note: 9 }, { label: "Movie 5: The Dumpster Battle", episodes: "1h24m", note: 8 } ] },
         { id: "jjk", img: "myranks/jjk.webp", title: "Jujutsu Kaisen", info: "3 temporadas: 59 episódios </br> 1 Filme: 1h45m" , studio: "MAPPA", airedSeason: "2020-?", rewatch: "3rd Season Not Yet", mal: [ { label: "1ª temporada", episodes: 24, note: 8 }, { label: "Movie: Jujutsu Kaisen 0", episodes: "1h44m", note: 8 }, { label: "2ª temporada", episodes: 23, note: 9 }, { label: "3ª temporada", episodes: 12, note: 9 }, ] },
         { id: "oshi-no-ko", img: "myranks/oshi-no-ko.webp", title: "Oshi no Ko", info: "3 temporadas: 35 episódios" , studio: "Doga Kobo", airedSeason: "2023-?", rewatch: "Yes", mal: [ { label: "1ª temporada", episodes: 11, note: 8 }, { label: "2ª temporada", episodes: 13, note: 7 }, { label: "3ª temporada", episodes: 11, note: 9 } ] },
@@ -5672,50 +5828,50 @@
         { id: "wind-breaker", img: "myranks/wind-breaker.webp", title: "Wind Breaker", info: "(~) 1ª temporada: 13 episódios" , studio: "CloverWorks", airedSeason: "2024-?", rewatch: "No", mal: [ { label: "1ª temporada", episodes: 13, note: 3 }, { label: "2ª temporada", episodes: 12, unwatched: true } ] },
       ];
 
-const rawWatchingData = [
+      const rawWatchingData = [
         // Non-Seasonal Anime
-        { id: "re-zero-4", img: "watchingnow/re-zero.webp", title: "Re:ZERO - Starting Life in Another World", info: "4 temporadas: 85 episódios", season: null, url: "https://www.anime-planet.com/anime/rezero-starting-life-in-another-world-season-4", crunchyroll: "https://www.crunchyroll.com/pt-br/series/GRGG9798R/rezero--starting-life-in-another-world-", seasons: [25, 25, 16, 19], cours: [null, [13, 12], null, null], studio: "White Fox", airedSeason: "2016-?", rewatch: "Only Season 1" },
-        { id: "rw-demon-slayer", img: "myranks/demon-slayer.webp", title: "Demon Slayer: Kimetsu no Yaiba", info: "5 temporadas: 63 episódios <br>1 Filme: 2h35m", season: null, url: "https://www.anime-planet.com/anime/demon-slayer-kimetsu-no-yaiba", crunchyroll: "https://www.crunchyroll.com/pt-br/series/GY5P48356/demon-slayer-kimetsu-no-yaiba", seasons: [26, 7, 11, 11, 8, 1], movieSeasons: [5], cours: [null, null, null, null, null], studio: "ufotable", airedSeason: "2019-?", rewatch: "Season 1" },   
-        { id: "my-teen-romantic-comedy", img: "watchingnow/my-teen-romantic-comedy.webp", title: "My Teen Romantic Comedy SNAFU", info: "3 temporadas: 39 episódios", url: "https://www.anime-planet.com/anime/my-teen-romantic-comedy-snafu", crunchyroll: "", season: null, seasons: [13, 13, 13], studio: "Brain's Base / feel", airedSeason: "2013-2020"},
-        { id: "haikyuu-dumpster", img: "watchingnow/haikyuu.webp", title: "Haikyu!! The Dumpster Battle", info: "Filme: 1h25m", season: null, url: "https://www.anime-planet.com/anime/haikyuu-movie-5-the-dumpster-battle", crunchyroll: "https://www.crunchyroll.com/pt-br/watch/GD9UE9XZ7/haikyu-the-dumpster-battle", seasons: [1], studio: "Production I.G", airedSeason: "2024"},
-        { id: "mob", img: "watchingnow/mob.webp", title: "Mob Psycho 100", info: "3 temporadas: 37 episódios", url: "https://www.anime-planet.com/anime/mob-psycho-100", crunchyroll: "https://www.crunchyroll.com/pt-br/series/GY190DKQR/mob-psycho-100", season: null, seasons: [12, 13, 12], studio: "Bones", airedSeason: "2016-2022" },
-        { id: "konosuba", img: "watchingnow/konosuba.webp", title: "Konosuba - God's Blessing on this Wonderful World", info: "3 temporadas: 31 episódios <br>1 Filme: 1h30m", url: "https://www.anime-planet.com/anime/konosuba-gods-blessing-on-this-wonderful-world", crunchyroll: "https://www.crunchyroll.com/pt-br/series/GYE5K3GQR/konosuba--gods-blessing-on-this-wonderful-world", season: null, seasons: [10, 10, 1, 11], movieSeasons: [2], studio: "Studio Deen / J.C. Staff", airedSeason: "2016" },
-        { id: "rw-aot", img: "watchingnow/aot.webp", title: "Attack on Titan", info: "4 temporadas: 94 episódios", season: null, url: "https://www.anime-planet.com/anime/attack-on-titan-the-final-season-part-ii", crunchyroll: "https://www.crunchyroll.com/pt-br/series/GR751KNZY/attack-on-titan", seasons: [25, 12, 22, 35], cours: [null, null, [12, 10], [16, 12]], studio: "MAPPA", airedSeason: "2022" },
+        { id: "re-zero-4", img: "watchingnow/re-zero.webp", title: "Re:ZERO - Starting Life in Another World", info: "4 temporadas: 85 episódios", season: null, studio: "White Fox", airedSeason: "2016-?", seasons: [25, 25, 16, 19], cours: [null, [13, 12], null, null], rewatch: "Only Season 1", url: "https://www.anime-planet.com/anime/rezero-starting-life-in-another-world-season-4", crunchyroll: "https://www.crunchyroll.com/pt-br/series/GRGG9798R/rezero--starting-life-in-another-world-", malUrl: "https://myanimelist.net/anime/61316/Re_Zero_kara_Hajimeru_Isekai_Seikatsu_4th_Season"},
+        { id: "rw-demon-slayer", img: "myranks/demon-slayer.webp", title: "Demon Slayer: Kimetsu no Yaiba", info: "5 temporadas: 63 episódios <br>1 Filme: 2h35m", season: null, studio: "ufotable", airedSeason: "2019-?", seasons: [26, 7, 11, 11, 8, 1], movieSeasons: [5], movieDurations: {5: "2h35m"}, cours: [null, null, null, null, null], rewatch: "Season 1", url: "https://www.anime-planet.com/anime/demon-slayer-kimetsu-no-yaiba", crunchyroll: "https://www.crunchyroll.com/pt-br/series/GY5P48XEY/demon-slayer-kimetsu-no-yaiba", malUrl: "https://myanimelist.net/anime/38000/Kimetsu_no_Yaiba" },   
+        { id: "my-teen-romantic-comedy", img: "watchingnow/my-teen-romantic-comedy.webp", title: "My Teen Romantic Comedy SNAFU", info: "3 temporadas: 39 episódios", season: null, studio: "Brain's Base / feel", airedSeason: "2013-2020", seasons: [13, 13, 13], url: "https://www.anime-planet.com/anime/my-teen-romantic-comedy-snafu", crunchyroll: "", malUrl: "" },
+        { id: "haikyuu-dumpster", img: "watchingnow/haikyuu.webp", title: "Haikyu!! The Dumpster Battle", info: "Filme: 1h25m", season: null, studio: "Production I.G", airedSeason: "2024", seasons: [1], url: "https://www.anime-planet.com/anime/haikyuu-movie-5-the-dumpster-battle", crunchyroll: "https://www.crunchyroll.com/pt-br/watch/GD9UE9XZ7/haikyu-the-dumpster-battle", malUrl: "" },
+        { id: "mob", img: "watchingnow/mob.webp", title: "Mob Psycho 100", info: "3 temporadas: 37 episódios", season: null, studio: "Bones", airedSeason: "2016-2022", seasons: [12, 13, 12], url: "https://www.anime-planet.com/anime/mob-psycho-100", crunchyroll: "https://www.crunchyroll.com/pt-br/series/GY190DKQR/mob-psycho-100", malUrl: "" },
+        { id: "konosuba", img: "watchingnow/konosuba.webp", title: "Konosuba - God's Blessing on this Wonderful World", info: "3 temporadas: 31 episódios <br>1 Filme: 1h30m", season: null, studio: "Studio Deen / J.C. Staff", airedSeason: "2016", seasons: [10, 10, 1, 11], movieSeasons: [2], movieDurations: {2: "1h30m"}, url: "https://www.anime-planet.com/anime/konosuba-gods-blessing-on-this-wonderful-world", crunchyroll: "https://www.crunchyroll.com/pt-br/series/GYE5K3GQR/konosuba--gods-blessing-on-this-wonderful-world", malUrl: "" },
+        { id: "rw-aot", img: "watchingnow/aot.webp", title: "Attack on Titan", info: "4 temporadas: 94 episódios", season: null, studio: "MAPPA", airedSeason: "2022", seasons: [25, 12, 22, 35], cours: [null, null, [12, 10], [16, 12]], url: "https://www.anime-planet.com/anime/attack-on-titan-the-final-season-part-ii", crunchyroll: "https://www.crunchyroll.com/pt-br/series/GR751KNZY/attack-on-titan", malUrl: "" },
 
-// Summer 2026
-        { id: "mushoku-3", img: "watchingnow/mushoku.webp", title: "Mushoku Tensei: Jobless Reincarnation", info: "3ª temporada: 14 episódios - Progress: 3/14", season: "summer-2026", url: "https://www.anime-planet.com/anime/mushoku-tensei-jobless-reincarnation-3rd-season", crunchyroll: "https://www.crunchyroll.com/pt-br/series/G24H1N3MP/mushoku-tensei-jobless-reincarnation", studio: "Studio Bind", airedSeason: "2026"},
-        { id: "grand-blue-2", img: "watchingnow/grand-blue.webp", title: "Grand Blue", info: "3ª temporada: 12 episódios - Progress: 1/12", season: "summer-2026", url: "https://www.anime-planet.com/anime/grand-blue-season-3", crunchyroll: "https://www.crunchyroll.com/pt-br/series/GNVHKN94W/grand-blue-dreaming", studio: " Zero-G / Saber Works", airedSeason: "2026"},
-        { id: "opposites-2", img: "watchingnow/opposites.webp", title: "You and I are Polar Opposites", info: "2ª temporada: 13 episódios - Progress: 1/13", season: "summer-2026", url: "https://www.anime-planet.com/anime/you-and-i-are-polar-opposites-2nd-season", crunchyroll: "https://www.crunchyroll.com/pt-br/series/GT00365624/you-and-i-are-polar-opposites", studio: "Lapin Track", airedSeason: "2026"},
-        { id: "smoking", img: "watchingnow/smoking.webp", title: "Smoking Behind the Supermarket with You", info: "12 episódios - Progress: -/12", season: "summer-2026", url: "https://www.anime-planet.com/anime/smoking-behind-the-supermarket-with-you", crunchyroll: "https://www.crunchyroll.com/pt-br/series/GT00378116/smoking-behind-the-supermarket-with-you", studio: "Asahi Production", airedSeason: "2026"},
-        { id: "exiled-heavy-knight", img: "watchingnow/exiled-heavy-knight.webp", title: "The Exiled Heavy Knight Knows How to Game the System", info: "26 episódios -Progress: -/26", season: "summer-2026", url: "https://www.anime-planet.com/anime/the-exiled-heavy-knight-knows-how-to-game-the-system", crunchyroll: "https://www.crunchyroll.com/pt-br/series/GT00378018/the-exiled-heavy-knight-knows-how-to-game-the-system", studio: "GoHands", airedSeason: "2026"},
-        { id: "tomb-raider-king", img: "watchingnow/tomb-raider-king.webp", title: "Tomb Raider King", info: "12 episódios - Progress: -/12", season: "summer-2026", url: "https://www.anime-planet.com/anime/tomb-raider-king", crunchyroll: "https://www.crunchyroll.com/pt-br/series/GT00378123/tomb-raider-king", studio: "Studio Eek", airedSeason: "2026"},
-        { id: "sparks-of-tomorrow", img: "watchingnow/sparks-of-tomorrow.webp", title: "Sparks of Tomorrow", info: "13 episódios - Progress: -/13", season: "summer-2026", url: "https://www.anime-planet.com/anime/sparks-of-tomorrow", crunchyroll: "", studio: "Kyoto Animation", airedSeason: "2026"},
-        { id: "the-100-girlfriends-3", img: "watchingnow/the-100-girlfriends.webp", title: "The 100 Girlfriends Who Really, Really, Really, Really, Really Love You", info: "3ª temporada: NaN episódios - Progress: -/-", season: "summer-2026", url: "https://www.anime-planet.com/anime/the-100-girlfriends-who-really-really-really-really-really-love-you-season-3", crunchyroll: "https://www.crunchyroll.com/pt-br/series/GNVHKN933/the-100-girlfriends-who-really-really-really-really-really-love-you", studio: "Bibury Animation Studios", airedSeason: "2026"},
-        { id: "ghost-in-the-shell", img: "watchingnow/ghost-in-the-shell.webp", title: "The Ghost in the Shell", info: "NaN episódios - Progress: -/-", season: "summer-2026", url: "https://www.anime-planet.com/anime/the-ghost-in-the-shell", crunchyroll: "", studio: "Science SARU", airedSeason: "2026"},
-        { id: "i-became-a-legend", img: "watchingnow/i-became-a-legend.webp", title: "I Became a Legend After My 10 Year-Long Last Stand", info: "12 episódios - Progress: -/12", season: "summer-2026", url: "https://www.anime-planet.com/anime/i-became-a-legend-after-my-10-year-long-last-stand", crunchyroll: "https://www.crunchyroll.com/pt-br/series/GT00371671/i-became-a-legend-after-my-10-year-long-last-stand", studio: "Gekkou", airedSeason: "2026"},
-        { id: "wrong-about-her", img: "watchingnow/wrong-about-her.webp", title: "Oh Boy, Was I Wrong About Her", info: "12 episódios - Progress: -/12", season: "summer-2026", url: "https://www.anime-planet.com/anime/oh-boy-was-i-wrong-about-her", crunchyroll: "https://www.crunchyroll.com/pt-br/series/GT00378120/oh-boy-was-i-wrong-about-her", studio: "Project No.9", airedSeason: "2026"},
-        { id: "chainsmoker-cat", img: "watchingnow/chainsmoker-cat.webp", title: "Chainsmoker Cat", info: "NaN episódios - Progress: -/-", season: "summer-2026", url: "https://www.anime-planet.com/anime/chainsmoker-cat", crunchyroll: "", studio: "Bibury Animation Studios", airedSeason: "2026"},
-        { id: "overshadowed-to-overpowered", img: "watchingnow/overshadowed-to-overpowered.webp", title: "From Overshadowed to Overpowered: Second Reincarnation of a Talentless Sage", info: "NaN episódios - Progress: -/-", season: "summer-2026", url: "https://www.anime-planet.com/anime/from-overshadowed-to-overpowered-second-reincarnation-of-a-talentless-sage", crunchyroll: "https://www.crunchyroll.com/pt-br/series/GT00378115/from-overshadowed-to-overpowered-second-reincarnation-of-a-talentless-sage", studio: "EMT Squared", airedSeason: "2026"},
+        // Summer 2026
+        { id: "mushoku-3", img: "watchingnow/mushoku.webp", title: "Mushoku Tensei: Jobless Reincarnation", info: "3ª temporada: 14 episódios - Progress: 3/14", season: "summer-2026", studio: "Studio Bind", airedSeason: "2026", url: "https://www.anime-planet.com/anime/mushoku-tensei-jobless-reincarnation-3rd-season", crunchyroll: "https://www.crunchyroll.com/pt-br/series/G24H1N3MP/mushoku-tensei-jobless-reincarnation", malUrl: "" },
+        { id: "grand-blue-2", img: "watchingnow/grand-blue.webp", title: "Grand Blue", info: "3ª temporada: 12 episódios - Progress: 1/12", season: "summer-2026", studio: " Zero-G / Saber Works", airedSeason: "2026", url: "https://www.anime-planet.com/anime/grand-blue-season-3", crunchyroll: "https://www.crunchyroll.com/pt-br/series/GNVHKN94W/grand-blue-dreaming", malUrl: "" },
+        { id: "opposites-2", img: "watchingnow/opposites.webp", title: "You and I are Polar Opposites", info: "2ª temporada: 13 episódios - Progress: 1/13", season: "summer-2026", studio: "Lapin Track", airedSeason: "2026", url: "https://www.anime-planet.com/anime/you-and-i-are-polar-opposites-2nd-season", crunchyroll: "https://www.crunchyroll.com/pt-br/series/GT00365624/you-and-i-are-polar-opposites", malUrl: "" },
+        { id: "smoking", img: "watchingnow/smoking.webp", title: "Smoking Behind the Supermarket with You", info: "12 episódios - Progress: -/12", season: "summer-2026", studio: "Asahi Production", airedSeason: "2026", url: "https://www.anime-planet.com/anime/smoking-behind-the-supermarket-with-you", crunchyroll: "https://www.crunchyroll.com/pt-br/series/GT00378116/smoking-behind-the-supermarket-with-you", malUrl: "" },
+        { id: "exiled-heavy-knight", img: "watchingnow/exiled-heavy-knight.webp", title: "The Exiled Heavy Knight Knows How to Game the System", info: "26 episódios -Progress: -/26", season: "summer-2026", studio: "GoHands", airedSeason: "2026", url: "https://www.anime-planet.com/anime/the-exiled-heavy-knight-knows-how-to-game-the-system", crunchyroll: "https://www.crunchyroll.com/pt-br/series/GT00378018/the-exiled-heavy-knight-knows-how-to-game-the-system", malUrl: "" },
+        { id: "tomb-raider-king", img: "watchingnow/tomb-raider-king.webp", title: "Tomb Raider King", info: "12 episódios - Progress: -/12", season: "summer-2026", studio: "Studio Eek", airedSeason: "2026", url: "https://www.anime-planet.com/anime/tomb-raider-king", crunchyroll: "https://www.crunchyroll.com/pt-br/series/GT00378123/tomb-raider-king", malUrl: "" },
+        { id: "sparks-of-tomorrow", img: "watchingnow/sparks-of-tomorrow.webp", title: "Sparks of Tomorrow", info: "13 episódios - Progress: -/13", season: "summer-2026", studio: "Kyoto Animation", airedSeason: "2026", url: "https://www.anime-planet.com/anime/sparks-of-tomorrow", crunchyroll: "", malUrl: "" },
+        { id: "the-100-girlfriends-3", img: "watchingnow/the-100-girlfriends.webp", title: "The 100 Girlfriends Who Really, Really, Really, Really, Really Love You", info: "3ª temporada: NaN episódios - Progress: -/-", season: "summer-2026", studio: "Bibury Animation Studios", airedSeason: "2026", url: "https://www.anime-planet.com/anime/the-100-girlfriends-who-really-really-really-really-really-love-you-season-3", crunchyroll: "https://www.crunchyroll.com/pt-br/series/GNVHKN933/the-100-girlfriends-who-really-really-really-really-really-love-you", malUrl: "" },
+        { id: "ghost-in-the-shell", img: "watchingnow/ghost-in-the-shell.webp", title: "The Ghost in the Shell", info: "NaN episódios - Progress: -/-", season: "summer-2026", studio: "Science SARU", airedSeason: "2026", url: "https://www.anime-planet.com/anime/the-ghost-in-the-shell", crunchyroll: "", malUrl: "" },
+        { id: "i-became-a-legend", img: "watchingnow/i-became-a-legend.webp", title: "I Became a Legend After My 10 Year-Long Last Stand", info: "12 episódios - Progress: -/12", season: "summer-2026", studio: "Gekkou", airedSeason: "2026", url: "https://www.anime-planet.com/anime/i-became-a-legend-after-my-10-year-long-last-stand", crunchyroll: "https://www.crunchyroll.com/pt-br/series/GT00371671/i-became-a-legend-after-my-10-year-long-last-stand", malUrl: "" },
+        { id: "wrong-about-her", img: "watchingnow/wrong-about-her.webp", title: "Oh Boy, Was I Wrong About Her", info: "12 episódios - Progress: -/12", season: "summer-2026", studio: "Project No.9", airedSeason: "2026", url: "https://www.anime-planet.com/anime/oh-boy-was-i-wrong-about-her", crunchyroll: "https://www.crunchyroll.com/pt-br/series/GT00378120/oh-boy-was-i-wrong-about-her", malUrl: "" },
+        { id: "chainsmoker-cat", img: "watchingnow/chainsmoker-cat.webp", title: "Chainsmoker Cat", info: "NaN episódios - Progress: -/-", season: "summer-2026", studio: "Bibury Animation Studios", airedSeason: "2026", url: "https://www.anime-planet.com/anime/chainsmoker-cat", crunchyroll: "", malUrl: "" },
+        { id: "overshadowed-to-overpowered", img: "watchingnow/overshadowed-to-overpowered.webp", title: "From Overshadowed to Overpowered: Second Reincarnation of a Talentless Sage", info: "NaN episódios - Progress: -/-", season: "summer-2026", studio: "EMT Squared", airedSeason: "2026", url: "https://www.anime-planet.com/anime/from-overshadowed-to-overpowered-second-reincarnation-of-a-talentless-sage", crunchyroll: "https://www.crunchyroll.com/pt-br/series/GT00378115/from-overshadowed-to-overpowered-second-reincarnation-of-a-talentless-sage", malUrl: "" },
 
         // Spring 2026
-        { id: "tensei-shitara-slime-4", img: "watchingnow/tensei-shitara-slime.webp", title: "That Time I Got Reincarnated as a Slime", info: "4ª temporada: 24 episódios", season: "spring-2026", url: "https://www.anime-planet.com/anime/that-time-i-got-reincarnated-as-a-slime-season-4", crunchyroll: "https://www.crunchyroll.com/pt-br/series/GYZJ43JMR/that-time-i-got-reincarnated-as-a-slime", seasons: [24], studio: "8-Bit", airedSeason: "2026"},
-        { id: "wistoria-2", img: "watchingnow/wistoria.webp", title: "Wistoria: Wand and Sword", info: "2ª temporada: 11 episódios - Progress: 11/12", season: "spring-2026", url: "https://www.anime-planet.com/anime/wistoria-wand-and-sword-2nd-season", crunchyroll: "https://www.crunchyroll.com/pt-br/series/GW4HM7WK9/wistoria-wand-and-sword", studio: "Actas / BN Pictures", airedSeason: "2026"},
-        { id: "imfwtspgimc", img: "watchingnow/imfwtspgimc.webp", title: "I Made Friends with the Second Prettiest Girl in My Class", info: "10 episódios - Progress: 10/12", season: "spring-2026", url: "https://www.anime-planet.com/anime/i-made-friends-with-the-second-prettiest-girl-in-my-class", crunchyroll: "https://www.crunchyroll.com/pt-br/series/GT00371673/i-made-friends-with-the-second-prettiest-girl-in-my-class", studio: "CONNECT", airedSeason: "2026"},
-        { id: "farming-life-2", img: "watchingnow/farming-life.webp", title: "Farming Life in Another World", info: "2ª temporada: 12 episódios - Progress: 7/12", season: "spring-2026", url: "https://www.anime-planet.com/anime/farming-life-in-another-world-2", crunchyroll: "", studio: "Zero-G", airedSeason: "2026"},
-        { id: "otaku-gyaru", img: "watchingnow/otaku-gyaru.webp", title: "Gals Can't Be Kind to Otaku", info: "12 episódios - Progress: 7/12", season: "spring-2026", url: "https://www.anime-planet.com/anime/gals-cant-be-kind-to-otaku", crunchyroll: "https://www.crunchyroll.com/pt-br/series/GT00371662/gals-cant-be-kind-to-otaku", studio: "TMS Entertainment", airedSeason: "2026"},
-        { id: "kill-blue", img: "watchingnow/kill-blue.webp", title: "Kill Blue", info: "12 episódios - Progress: 6/12", season: "spring-2026", url: "https://www.anime-planet.com/anime/kill-blue", crunchyroll: "https://www.crunchyroll.com/pt-br/series/GT00371896/kill-blue", studio: "CUE", airedSeason: "2026"},
-        { id: "klutzy-class-monitor", img: "watchingnow/klutzy-class-monitor.webp", title: "The Klutzy Class Monitor and the Girl with the Short Skirt", info: "12 episódios - Progress: 9/12", season: "spring-2026", url: "https://www.anime-planet.com/anime/the-klutzy-class-monitor-and-the-girl-with-the-short-skirt", crunchyroll: "https://www.crunchyroll.com/pt-br/series/GT00371923/the-klutzy-class-monitor-and-the-girl-with-the-short-skirt", studio: "Zero-G", airedSeason: "2026"},
-        { id: "angel-next-door-2", img: "watchingnow/angel-next-door.webp", title: "The Angel Next Door Spoils Me Rotten", info: "2ª temporada: 12 episódios - Progress: 4/12", season: "spring-2026", url: "https://www.anime-planet.com/anime/the-angel-next-door-spoils-me-rotten-season-2", crunchyroll: "https://www.crunchyroll.com/pt-br/series/G9VHN91DJ/the-angel-next-door-spoils-me-rotten", studio: "Project No.9", airedSeason: "2026"},
+        { id: "tensei-shitara-slime-4", img: "watchingnow/tensei-shitara-slime.webp", title: "That Time I Got Reincarnated as a Slime", info: "4ª temporada: 24 episódios", season: "spring-2026", studio: "8-Bit", airedSeason: "2026", seasons: [24], url: "https://www.anime-planet.com/anime/that-time-i-got-reincarnated-as-a-slime-season-4", crunchyroll: "https://www.crunchyroll.com/pt-br/series/GYZJ43JMR/that-time-i-got-reincarnated-as-a-slime", malUrl: "" },
+        { id: "wistoria-2", img: "watchingnow/wistoria.webp", title: "Wistoria: Wand and Sword", info: "2ª temporada: 11 episódios - Progress: 11/12", season: "spring-2026", studio: "Actas / BN Pictures", airedSeason: "2026", url: "https://www.anime-planet.com/anime/wistoria-wand-and-sword-2nd-season", crunchyroll: "https://www.crunchyroll.com/pt-br/series/GW4HM7WK9/wistoria-wand-and-sword", malUrl: "" },
+        { id: "imfwtspgimc", img: "watchingnow/imfwtspgimc.webp", title: "I Made Friends with the Second Prettiest Girl in My Class", info: "10 episódios - Progress: 10/12", season: "spring-2026", studio: "CONNECT", airedSeason: "2026", url: "https://www.anime-planet.com/anime/i-made-friends-with-the-second-prettiest-girl-in-my-class", crunchyroll: "https://www.crunchyroll.com/pt-br/series/GT00371673/i-made-friends-with-the-second-prettiest-girl-in-my-class", malUrl: "" },
+        { id: "farming-life-2", img: "watchingnow/farming-life.webp", title: "Farming Life in Another World", info: "2ª temporada: 12 episódios - Progress: 7/12", season: "spring-2026", studio: "Zero-G", airedSeason: "2026", url: "https://www.anime-planet.com/anime/farming-life-in-another-world-2", crunchyroll: "", malUrl: "" },
+        { id: "otaku-gyaru", img: "watchingnow/otaku-gyaru.webp", title: "Gals Can't Be Kind to Otaku", info: "12 episódios - Progress: 7/12", season: "spring-2026", studio: "TMS Entertainment", airedSeason: "2026", url: "https://www.anime-planet.com/anime/gals-cant-be-kind-to-otaku", crunchyroll: "https://www.crunchyroll.com/pt-br/series/GT00371662/gals-cant-be-kind-to-otaku", malUrl: "" },
+        { id: "kill-blue", img: "watchingnow/kill-blue.webp", title: "Kill Blue", info: "12 episódios - Progress: 6/12", season: "spring-2026", studio: "CUE", airedSeason: "2026", url: "https://www.anime-planet.com/anime/kill-blue", crunchyroll: "https://www.crunchyroll.com/pt-br/series/GT00371896/kill-blue", malUrl: "" },
+        { id: "klutzy-class-monitor", img: "watchingnow/klutzy-class-monitor.webp", title: "The Klutzy Class Monitor and the Girl with the Short Skirt", info: "12 episódios - Progress: 9/12", season: "spring-2026", studio: "Zero-G", airedSeason: "2026", url: "https://www.anime-planet.com/anime/the-klutzy-class-monitor-and-the-girl-with-the-short-skirt", crunchyroll: "https://www.crunchyroll.com/pt-br/series/GT00371923/the-klutzy-class-monitor-and-the-girl-with-the-short-skirt", malUrl: "" },
+        { id: "angel-next-door-2", img: "watchingnow/angel-next-door.webp", title: "The Angel Next Door Spoils Me Rotten", info: "2ª temporada: 12 episódios - Progress: 4/12", season: "spring-2026", studio: "Project No.9", airedSeason: "2026", url: "https://www.anime-planet.com/anime/the-angel-next-door-spoils-me-rotten-season-2", crunchyroll: "https://www.crunchyroll.com/pt-br/series/G9VHN91DJ/the-angel-next-door-spoils-me-rotten", malUrl: "" },
 
         // Winter 2026
-        { id: "midnight-heart", img: "watchingnow/midnight-heart.webp", title: "Tune In to the Midnight Heart", info: "12 episódios - Progress: 8/12", season: "winter-2026", url: "https://www.anime-planet.com/anime/tune-in-to-the-midnight-heart", crunchyroll: "https://www.crunchyroll.com/pt-br/series/GT00365772/tune-in-to-the-midnight-heart", studio: "Gekkou", airedSeason: "2026"},
+        { id: "midnight-heart", img: "watchingnow/midnight-heart.webp", title: "Tune In to the Midnight Heart", info: "12 episódios - Progress: 8/12", season: "winter-2026", studio: "Gekkou", airedSeason: "2026", url: "https://www.anime-planet.com/anime/tune-in-to-the-midnight-heart", crunchyroll: "https://www.crunchyroll.com/pt-br/series/GT00365772/tune-in-to-the-midnight-heart", malUrl: "" },
 
         // On Hold
-        { id: "aoashi", img: "watchingnow/aoashi.webp", title: "Aoashi", info: "24 episódios", season: "on-hold", url: "https://www.anime-planet.com/anime/aoashi", crunchyroll: "https://www.crunchyroll.com/pt-br/series/G4PH0WX5J/aoashi", seasons: [24], studio: "Production I.G", airedSeason: "2022-?"},
-        { id: "danmachi-5", img: "watchingnow/danmachi.webp", title: "Danmachi: Is It Wrong to Try to Pick Up Girls in a Dungeon", info: "5ª temporada: 15 episódios", season: "on-hold", url: "https://www.anime-planet.com/anime/is-it-wrong-to-try-to-pick-up-girls-in-a-dungeon-v", crunchyroll: "https://www.crunchyroll.com/pt-br/series/G6DQN9KGR/is-it-wrong-to-try-to-pick-up-girls-in-a-dungeon", seasons: [15], studio: "J.C. Staff", airedSeason: "2024-2025"},
-        { id: "bocchi-the-rock", img: "watchingnow/bocchi-the-rock.webp", title: "Bocchi the Rock", info: "12 episódios", season: "on-hold", url: "https://www.anime-planet.com/anime/bocchi-the-rock", crunchyroll: "https://www.crunchyroll.com/pt-br/series/GXJHM3P19/bocchi-the-rock", seasons: [12], studio: "CloverWorks", airedSeason: "2022-?"},
-        { id: "sk8", img: "watchingnow/sk8.webp", title: "SK8 the Infinity ", info: "12 episódios", season: "on-hold", url: "https://www.anime-planet.com/anime/sk8-the-infinity", crunchyroll: "https://www.crunchyroll.com/pt-br/series/G5PHNM434/sk8-the-infinity", seasons: [12], studio: "Bones", airedSeason: "2021-?"},
-        { id: "study-of-vanitas", img: "watchingnow/study-of-vanitas.webp", title: "The Case Study of Vanitas", info: "1 temporada", season: "on-hold", url: "https://www.anime-planet.com/anime/the-case-study-of-vanitas", crunchyroll: "https://www.crunchyroll.com/pt-br/series/GEXH3W8DG/the-case-study-of-vanitas", seasons: [24], cours: [[12, 12]], studio: "Bones", airedSeason: "2021-2022" }
+        { id: "aoashi", img: "watchingnow/aoashi.webp", title: "Aoashi", info: "24 episódios", season: "on-hold", studio: "Production I.G", airedSeason: "2022-?", seasons: [24], url: "https://www.anime-planet.com/anime/aoashi", crunchyroll: "https://www.crunchyroll.com/pt-br/series/G4PH0WX5J/aoashi", malUrl: "" },
+        { id: "danmachi-5", img: "watchingnow/danmachi.webp", title: "Danmachi: Is It Wrong to Try to Pick Up Girls in a Dungeon", info: "5ª temporada: 15 episódios", season: "on-hold", studio: "J.C. Staff", airedSeason: "2024-2025", seasons: [15], url: "https://www.anime-planet.com/anime/is-it-wrong-to-try-to-pick-up-girls-in-a-dungeon-v", crunchyroll: "https://www.crunchyroll.com/pt-br/series/G6DQN9KGR/is-it-wrong-to-try-to-pick-up-girls-in-a-dungeon", malUrl: "" },
+        { id: "bocchi-the-rock", img: "watchingnow/bocchi-the-rock.webp", title: "Bocchi the Rock", info: "12 episódios", season: "on-hold", studio: "CloverWorks", airedSeason: "2022-?", seasons: [12], url: "https://www.anime-planet.com/anime/bocchi-the-rock", crunchyroll: "https://www.crunchyroll.com/pt-br/series/GXJHM3P19/bocchi-the-rock", malUrl: "" },
+        { id: "sk8", img: "watchingnow/sk8.webp", title: "SK8 the Infinity ", info: "12 episódios", season: "on-hold", studio: "Bones", airedSeason: "2021-?", seasons: [12], url: "https://www.anime-planet.com/anime/sk8-the-infinity", crunchyroll: "https://www.crunchyroll.com/pt-br/series/G5PHNM434/sk8-the-infinity", malUrl: "" },
+        { id: "study-of-vanitas", img: "watchingnow/study-of-vanitas.webp", title: "The Case Study of Vanitas", info: "1 temporada", season: "on-hold", studio: "Bones", airedSeason: "2021-2022", seasons: [24], cours: [[12, 12]], url: "https://www.anime-planet.com/anime/the-case-study-of-vanitas", crunchyroll: "https://www.crunchyroll.com/pt-br/series/GEXH3W8DG/the-case-study-of-vanitas", malUrl: "" }
       ];
 
       const WATCHING_NO_SEASON_LABEL = { text: "Non-Seasonal Anime", color: "#7dd3fc" };
@@ -5955,6 +6111,16 @@ const rawWatchingData = [
         if (a.airedSeason) meta.season = a.airedSeason;
         if (a.rewatch) meta.rewatch = a.rewatch;
         if (Object.keys(meta).length) ANIME_STATIC_META[a.id] = meta;
+      });
+
+      // Mapa id -> título, usado por renderMeta() para checar se um anime do
+      // "Watching Now" também tem entrada na lista principal (animeData),
+      // comparando por título (os ids costumam divergir entre as duas
+      // listas, ex: "demon-slayer" vs "rw-demon-slayer", "re-zero" vs
+      // "re-zero-4").
+      const ANIME_TITLE_BY_ID = {};
+      [...animeData, ...watchingData].forEach(a => {
+        ANIME_TITLE_BY_ID[a.id] = a.title;
       });
 
       const planIds = new Set(planToWatchData.map(a => a.id));
@@ -6245,6 +6411,67 @@ const rawWatchingData = [
       // questão também for dividida em "cours" (campo "cours"), desce mais
       // um nível e retorna o progresso relativo ao cour atual em vez da
       // temporada inteira (ex: 2ª metade da temporada -> reinicia do 1).
+      // ── Duração de filme (ex: "2h35m") convertida pra minutos ──
+      // Usada pra dar uma largura visual proporcional ao filme na barra de
+      // progresso, em vez de contar como "1 episódio" de largura (o que
+      // ficava minúsculo perto do resto da barra).
+      function parseDurationToMinutes(str) {
+        if (!str) return null;
+        const m = String(str).trim().match(/^(?:(\d+)h)?\s*(?:(\d+)m)?$/i);
+        if (!m) return null;
+        const h = m[1] ? parseInt(m[1], 10) : 0;
+        const mi = m[2] ? parseInt(m[2], 10) : 0;
+        if (!h && !mi) return null;
+        return h * 60 + mi;
+      }
+
+      // 20 minutos "valem" 1 episódio de largura visual na barra.
+      const MOVIE_MINUTES_PER_EPISODE_UNIT = 20;
+
+      // Pesos visuais de cada posição do array "seasons": normalmente igual
+      // ao próprio número de episódios, mas quando a posição é um filme
+      // (ver "movieSeasons"), o peso vira a duração do filme (campo
+      // "movieDurations", ex: {5: "2h35m"}) dividida por 20 — assim um
+      // filme de 2h35m ocupa um espaço bem maior na barra do que os 20
+      // minutos de "1 episódio" comum.
+      function computeSeasonVisualWeights(anime) {
+        const movieIdxSet = new Set(Array.isArray(anime.movieSeasons) ? anime.movieSeasons : []);
+        const weights = anime.seasons.map((epCount, idx) => {
+          if (movieIdxSet.has(idx)) {
+            const durStr = anime.movieDurations && anime.movieDurations[idx];
+            const minutes = parseDurationToMinutes(durStr);
+            if (minutes) return Math.max(1, minutes / MOVIE_MINUTES_PER_EPISODE_UNIT);
+          }
+          return epCount;
+        });
+        const total = weights.reduce((a, b) => a + b, 0);
+        return { weights, total };
+      }
+
+      // Mapeia o episódio atual ("cur", contagem real de cliques no +/-)
+      // pra uma % de preenchimento que respeita os pesos visuais acima —
+      // assim o preenchimento da barra sempre bate certinho com as
+      // zonas/marcadores desenhados, mesmo quando um filme "pesa" mais que
+      // as outras unidades da barra.
+      function computeVisualFillPct(anime, cur) {
+        const { weights, total } = computeSeasonVisualWeights(anime);
+        if (!total) return 0;
+        let acc = 0;
+        let visAcc = 0;
+        for (let i = 0; i < anime.seasons.length; i++) {
+          const epCount = anime.seasons[i];
+          const w = weights[i];
+          if (cur <= acc + epCount) {
+            const fracWithin = epCount > 0 ? Math.max(0, cur - acc) / epCount : 0;
+            visAcc += fracWithin * w;
+            return Math.max(0, Math.min(100, (visAcc / total) * 100));
+          }
+          acc += epCount;
+          visAcc += w;
+        }
+        return Math.max(0, Math.min(100, (visAcc / total) * 100));
+      }
+
       function getSeasonRelativeProgress(anime, cur) {
         if (!Array.isArray(anime.seasons) || anime.seasons.length < 1) return null;
 
@@ -6420,6 +6647,7 @@ const rawWatchingData = [
         const isAnimePlanetLinkable = (mode === 'plan' || mode === 'announced-unwatched');
         const urlAttr = (isAnimePlanetLinkable && anime.url) ? ` data-anime-planet-url="${anime.url}"` : '';
         const watchNowUrlAttr = (mode === 'watching' && anime.url) ? ` data-watchnow-anime-planet-url="${anime.url}"` : '';
+        const watchNowMalUrlAttr = (isLinkableMode && anime.malUrl) ? ` data-watchnow-mal-url="${anime.malUrl}"` : '';
         const crAttr = (isLinkableMode && anime.crunchyroll) ? ` data-crunchyroll-url="${anime.crunchyroll}"` : '';
         const navAllAttr = (mode !== 'watching' && mode !== 'plan' && mode !== 'all' && mode !== 'announced-unwatched') ? ` data-nav-all="1"` : '';
 
@@ -6477,22 +6705,34 @@ const rawWatchingData = [
                     return { isMovie: false, label: `${seasonNum}ª temporada` };
                   });
 
+                  // Larguras visuais: temporadas normais usam o nº de
+                  // episódios de sempre, mas filmes usam a duração real
+                  // (via "movieDurations") ao invés do "1 episódio" fake —
+                  // assim o pedaço do filme na barra fica do tamanho real
+                  // dele (ex: 2h35m ≈ 7-8 "episódios" de largura).
+                  const { weights: visualWeights, total: visualTotal } = computeSeasonVisualWeights(anime);
+
+                  let visAcc = 0;
                   seasonMarksHtml = anime.seasons.slice(0, -1).map((epCount, idx) => {
-                    acc += epCount;
-                    const markPct = Math.max(0, Math.min(100, (acc / seasonTotal) * 100));
+                    visAcc += visualWeights[idx];
+                    const markPct = Math.max(0, Math.min(100, (visAcc / visualTotal) * 100));
                     const { isMovie, label } = seasonLabels[idx];
                     return `<span class="watch-progress-season-mark" style="left:${markPct}%;" title="Fim ${isMovie ? 'do' : 'da'} ${label}"></span>`;
                   }).join('');
 
                   let zoneAcc = 0;
                   seasonZonesHtml = anime.seasons.map((epCount, idx) => {
-                    const startPct = Math.max(0, Math.min(100, (zoneAcc / seasonTotal) * 100));
-                    zoneAcc += epCount;
-                    const endPct = Math.max(0, Math.min(100, (zoneAcc / seasonTotal) * 100));
+                    const startPct = Math.max(0, Math.min(100, (zoneAcc / visualTotal) * 100));
+                    zoneAcc += visualWeights[idx];
+                    const endPct = Math.max(0, Math.min(100, (zoneAcc / visualTotal) * 100));
                     const widthPct = Math.max(0, endPct - startPct);
-                    const { label } = seasonLabels[idx];
+                    const { isMovie, label } = seasonLabels[idx];
                     const epLabel = epCount === 1 ? 'episódio' : 'episódios';
-                    return `<span class="watch-progress-season-zone" style="left:${startPct}%;width:${widthPct}%;" title="${label}: ${epCount} ${epLabel}"></span>`;
+                    const durStr = isMovie && anime.movieDurations ? anime.movieDurations[idx] : null;
+                    const zoneTitle = isMovie
+                      ? `${label}: ${durStr || `${epCount} ${epLabel}`}`
+                      : `${label}: ${epCount} ${epLabel}`;
+                    return `<span class="watch-progress-season-zone" style="left:${startPct}%;width:${widthPct}%;" title="${zoneTitle}"></span>`;
                   }).join('');
                 }
 
@@ -6517,6 +6757,14 @@ const rawWatchingData = [
                     seasonAcc += seasonEpCount;
                   });
                 }
+
+                // Recalcula o preenchimento da barra (pct) usando os mesmos
+                // pesos visuais das zonas acima, senão o preenchimento
+                // (baseado na contagem real de episódios) ficaria
+                // desalinhado com a zona do filme, que agora é mais larga.
+                if (anime.seasons.length > 1) {
+                  progress.pct = computeVisualFillPct(anime, progress.cur);
+                }
               }
               const seasonRel = getSeasonRelativeProgress(anime, progress.cur);
               const labelHtml = seasonRel
@@ -6539,7 +6787,7 @@ const rawWatchingData = [
         }
 
         return `
-          <li class="anime-item${subClass}${topRankClass}" id="${anime.id}"${hoverStyle}${urlAttr}${watchNowUrlAttr}${crAttr}${navAllAttr}>
+          <li class="anime-item${subClass}${topRankClass}" id="${anime.id}"${hoverStyle}${urlAttr}${watchNowUrlAttr}${watchNowMalUrlAttr}${crAttr}${navAllAttr}${mode === 'watching' ? ' data-watching-now="1"' : ''}>
             <div class="anime-item-ambient" aria-hidden="true"></div>
             <div class="anime-item-ambient-shade" aria-hidden="true"></div>
             <div class="rank-wrap">
@@ -7289,6 +7537,51 @@ const rawWatchingData = [
           const nextBtn = card.querySelector('.fav-ep-thumbnav-next');
           if (prevBtn) prevBtn.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); goTo(index - 1); });
           if (nextBtn) nextBtn.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); goTo(index + 1); });
+
+          // ── Swipe (arrastar o dedo) na imagem grande — mobile ──
+          // Arrastar pra esquerda avança pra próxima imagem, pra direita
+          // volta pra anterior, igual às setas ‹ ›.
+          const mediaMain = card.querySelector('.fav-ep-media-main');
+          if (mediaMain) {
+            const SWIPE_MIN_DISTANCE = 40;   // px mínimos no eixo X
+            const SWIPE_MAX_OFF_AXIS = 60;   // tolerância no eixo Y
+            const SWIPE_MAX_TIME = 600;      // ms
+            let touchStartX = 0;
+            let touchStartY = 0;
+            let touchStartTime = 0;
+            let touching = false;
+
+            mediaMain.addEventListener('touchstart', (e) => {
+              if (e.touches.length !== 1) return;
+              touchStartX = e.touches[0].clientX;
+              touchStartY = e.touches[0].clientY;
+              touchStartTime = Date.now();
+              touching = true;
+            }, { passive: true });
+
+            mediaMain.addEventListener('touchend', (e) => {
+              if (!touching) return;
+              touching = false;
+
+              const touch = e.changedTouches[0];
+              const dx = touch.clientX - touchStartX;
+              const dy = touch.clientY - touchStartY;
+              const dt = Date.now() - touchStartTime;
+
+              if (dt > SWIPE_MAX_TIME) return;
+              if (Math.abs(dy) > SWIPE_MAX_OFF_AXIS) return;
+              if (Math.abs(dx) < SWIPE_MIN_DISTANCE) return;
+
+              e.preventDefault();
+              e.stopPropagation();
+
+              if (dx < 0) {
+                goTo(index + 1); // arrastou pra esquerda = próxima imagem
+              } else {
+                goTo(index - 1); // arrastou pra direita = imagem anterior
+              }
+            });
+          }
         });
 
         sizeAllFavEpThumbstrips();
@@ -7839,6 +8132,83 @@ const rawWatchingData = [
             .trim();
         }
 
+        // ── Busca "tolerante": não exige o título exato ──
+        // Distância de Levenshtein simples (número mínimo de
+        // inserções/remoções/trocas pra transformar uma string na outra),
+        // usada abaixo pra aceitar pequenos erros de digitação.
+        function levenshtein(a, b) {
+          const al = a.length, bl = b.length;
+          if (al === 0) return bl;
+          if (bl === 0) return al;
+          const dp = new Array(bl + 1);
+          for (let j = 0; j <= bl; j++) dp[j] = j;
+          for (let i = 1; i <= al; i++) {
+            let prev = dp[0];
+            dp[0] = i;
+            for (let j = 1; j <= bl; j++) {
+              const temp = dp[j];
+              dp[j] = a[i - 1] === b[j - 1] ? prev : 1 + Math.min(prev, dp[j], dp[j - 1]);
+              prev = temp;
+            }
+          }
+          return dp[bl];
+        }
+
+        // Dá uma nota pro quão bem "query" combina com "title": aceita as
+        // palavras em qualquer ordem, palavras parciais/abreviadas (ex:
+        // "jujutsu k" acha "Jujutsu Kaisen") e pequenos erros de digitação
+        // (ex: "wistoia" ainda acha "Wistoria"). Quanto maior a nota,
+        // melhor o match; 0 significa "não bate".
+        function fuzzyMatchScore(query, title) {
+          const q = normalize(query);
+          const t = normalize(title);
+          if (!q) return 0;
+
+          // Match direto (substring do título inteiro) continua sendo o
+          // melhor resultado possível — mantém a busca "clássica" funcionando.
+          if (t.includes(q)) {
+            return t.startsWith(q) ? 1000 : 700;
+          }
+
+          const qTokens = q.split(/\s+/).filter(Boolean);
+          const tTokens = t.split(/[\s:.,\-!?'"()]+/).filter(Boolean);
+          if (!qTokens.length || !tTokens.length) return 0;
+
+          let matchedTokens = 0;
+          let penalty = 0;
+          qTokens.forEach(qt => {
+            let bestRatio = -1;
+            tTokens.forEach(tt => {
+              if (tt.includes(qt) || (qt.length >= 3 && qt.startsWith(tt))) {
+                // Palavra do título contém a palavra digitada (ou é prefixo
+                // dela) — considera "match perfeito" desse token.
+                if (bestRatio < 1) bestRatio = 1;
+                return;
+              }
+              // Senão, tolera erro de digitação proporcional ao tamanho da
+              // palavra (palavras curtas toleram menos erro).
+              const maxLen = Math.max(qt.length, tt.length);
+              const dist = levenshtein(qt, tt);
+              const ratio = 1 - dist / maxLen;
+              const threshold = qt.length <= 3 ? 0.65 : 0.55;
+              if (ratio >= threshold && ratio > bestRatio) bestRatio = ratio;
+            });
+            if (bestRatio >= 0) {
+              matchedTokens++;
+              penalty += (1 - bestRatio);
+            }
+          });
+
+          // Exige que a maioria das palavras digitadas tenha achado par —
+          // evita, por ex, "one two three" combinar com qualquer título só
+          // porque uma palavra qualquer bateu por acaso.
+          const coverage = matchedTokens / qTokens.length;
+          const minCoverage = qTokens.length <= 1 ? 1 : 0.6;
+          if (coverage < minCoverage) return 0;
+
+          return Math.round(coverage * 500 - penalty * 40);
+        }
+
         function categoryForResult(entry) {
           if (entry.tag === 'watching') return 'watching';
           if (entry.tag === 'plan') return 'plan';
@@ -7901,9 +8271,21 @@ const rawWatchingData = [
 
         function highlightTitle(title, query) {
           if (!query) return title;
-          const idx = title.toLowerCase().indexOf(query.toLowerCase());
-          if (idx === -1) return title;
-          return title.slice(0, idx) + '<mark>' + title.slice(idx, idx + query.length) + '</mark>' + title.slice(idx + query.length);
+          const idxFull = title.toLowerCase().indexOf(query.toLowerCase());
+          if (idxFull !== -1) {
+            return title.slice(0, idxFull) + '<mark>' + title.slice(idxFull, idxFull + query.length) + '</mark>' + title.slice(idxFull + query.length);
+          }
+          // Sem match exato da frase inteira (busca tolerante encontrou o
+          // título mesmo assim) — destaca cada palavra digitada que
+          // aparecer isolada no título, em vez de não destacar nada.
+          const tokens = query.split(/\s+/).filter(t => t.length >= 2);
+          if (!tokens.length) return title;
+          const escaped = tokens
+            .slice()
+            .sort((a, b) => b.length - a.length)
+            .map(t => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+          const re = new RegExp('(' + escaped.join('|') + ')', 'ig');
+          return title.replace(re, '<mark>$1</mark>');
         }
 
         // ── Rotação da ordem das seções do "Watching Now" no comando "/all" ──
@@ -8148,7 +8530,12 @@ const rawWatchingData = [
 
           const q = normalize(query);
           const matches = q
-            ? searchIndex.filter(entry => normalize(entry.anime.title).includes(q)).slice(0, 30)
+            ? searchIndex
+                .map(entry => ({ entry, score: fuzzyMatchScore(query, entry.anime.title) }))
+                .filter(x => x.score > 0)
+                .sort((a, b) => b.score - a.score)
+                .slice(0, 30)
+                .map(x => x.entry)
             : [];
 
           renderEntries(matches, query);
@@ -8513,7 +8900,7 @@ const rawWatchingData = [
         const SWIPE_MAX_TIME = 600;      // ms
 
         document.addEventListener('touchstart', (e) => {
-          if (e.target.closest('.category-drawer') || e.target.closest('.filter-wrapper')) return;
+          if (e.target.closest('.category-drawer') || e.target.closest('.filter-wrapper') || e.target.closest('.fav-ep-media')) return;
           const lightboxEl = document.getElementById('posterLightbox');
           if (lightboxEl && lightboxEl.classList.contains('open')) return;
           if (e.touches.length !== 1) return;
